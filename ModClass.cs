@@ -4,23 +4,25 @@ using System.Collections.Generic;
 using Modding;
 using UnityEngine;
 using UObject = UnityEngine.Object;
-using HelperForChallenge.PresetEquipment;
+//using HelperForChallenge.PresetEquipment;
 using ToggleableBindings;
+using UnityEngine.PlayerLoop;
 namespace HelperForChallenge
 {
     public class HelperForChallenge : Mod
     {
-        internal static HelperForChallenge Instance;
+      
+        //internal static HelperForChallenge Instance;
 
         bool isCharms = false;
         public string IDCharmsBinding = "ToggleableBindings::CharmsBinding";
-        
+
         bool isNail = false;
         public string IDNailBinding = "ToggleableBindings::NailBinding";
-        
+
         bool isShell = false;
         public string IDShellBinding = "ToggleableBindings::ShellBinding";
-        
+
         bool isSoul = false;
         public string IDSoulBinding = "ToggleableBindings::SoulBinding";
 
@@ -31,6 +33,7 @@ namespace HelperForChallenge
 
             base.Initialize();
             ModHooks.HeroUpdateHook += OnHeroUpdate;
+
 
         }
 
@@ -50,7 +53,7 @@ namespace HelperForChallenge
                     BindingManager.ApplyBinding(IDCharmsBinding);
                 }
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 var Charms = BindingManager.GetBinding(IDNailBinding);
@@ -65,7 +68,7 @@ namespace HelperForChallenge
                     BindingManager.ApplyBinding(IDNailBinding);
                 }
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Alpha3))
             {
                 var Charms = BindingManager.GetBinding(IDShellBinding);
@@ -80,7 +83,7 @@ namespace HelperForChallenge
                     BindingManager.ApplyBinding(IDShellBinding);
                 }
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Alpha4))
             {
                 var Charms = BindingManager.GetBinding(IDSoulBinding);
