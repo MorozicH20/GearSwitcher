@@ -1,8 +1,4 @@
 ﻿using System;
-using SystemCollectionsGeneric;
-using SystemLinq;
-using SystemText;
-using SystemThreadingTasks;
 
 namespace HelperForChallengePresetEquipment
 {

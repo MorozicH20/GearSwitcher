@@ -10,5 +10,6 @@ namespace HelperForChallenge
     {
         public const string Name = "HelperForChallenge";
         public const string Version = "1.0.0.0";
+
     }
 }
