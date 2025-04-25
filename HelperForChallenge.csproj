@@ -121,6 +121,9 @@
     <Reference Include="System.Xml.XPath.XDocument">
       <HintPath>$(HollowKnightRefs)/System.Xml.XPath.XDocument.dll</HintPath>
     </Reference>
+    <Reference Include="ToggleableBindings">
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Hollow Knight\hollow_knight_Data\Managed\Mods\Toggleable Bindings\ToggleableBindings.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>$(HollowKnightRefs)/Unity.Timeline.dll</HintPath>
     </Reference>
@@ -330,5 +333,8 @@
     <None Include=".gitignore" />
     <None Include="ReadMe.md" />
     <None Include="Resources\.gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Bindings\" />
   </ItemGroup>
 </Project>
