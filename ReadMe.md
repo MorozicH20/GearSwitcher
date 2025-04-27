@@ -6,7 +6,7 @@ This mod allows players to quickly switch between pre-defined gear presets in Ho
 
 ## Dependencies
 
-*   [ToggleableBindings] (v0.13) - https://github.com/Unordinal/HollowKnight.ToggleableBindings)
+*   [ToggleableBindings](https://github.com/Unordinal/HollowKnight.ToggleableBindings) (v0.13)
 
 ## Features
 
@@ -106,37 +106,38 @@ for example
 ]
 ```
 
-Name: (string) The name of the preset.
-MaxHealth: (integer) Maximum health.
-MaxMP: (integer) Maximum MP (Soul).
-NailDamage: (integer) Nail damage level.
-CharmSlots: (integer) Number of available charm slots.
-HasAllMoveAbilities: (boolean) Whether all movement abilities are unlocked. If true, the HasMoveAbilities field is ignored.
-HasMoveAbilities: (object) An object containing booleans for each movement ability.
-hasAcidArmour: (boolean) Has acid armor.
-hasDash: (boolean) Has dash.
-hasWalljump: (boolean) Has wall jump.
-hasSuperDash: (boolean) Has super dash.
-hasShadowDash: (boolean) Has shadow dash.
-hasDoubleJump: (boolean) Has double jump.
-AllSpelsLvl: (integer) The level of all spells. If 1 the “SpelsLvl” is ignored.
-SpelsLvl: (object) An object containing integers for each spell level.
-fireballLevel: (integer) Fireball level.
-quakeLevel: (integer) Quake level.
-screamLevel: (integer) Scream level.
-HasAllNailArts: (boolean) Whether all nail arts are unlocked. If true, the HasNailArts field is ignored.
-HasNailArts: (object) An object containing booleans for each nail art.
-hasCyclone: (boolean) Has cyclone slash.
-hasDashSlash: (boolean) Has dash slash.
-hasUpwardSlash: (boolean) Has upward slash.
-LvlDreamNail: (integer) Dream nail level.
-HasAllBindings: (boolean) Whether all bindings are active. If true, the Bindings field is ignored.
-Bindings: (object) An object containing booleans for each binding.
-CharmsBinding: (boolean) Charm binding.
-NailBinding: (boolean) Nail binding.
-ShellBinding: (boolean) Shell binding.
-SoulBinding: (boolean) Soul binding.
+### Fields
 
+*   `Name`: (string) The name of the preset.
+*   `MaxHealth`: (integer) Maximum health.
+*   `MaxMP`: (integer) Maximum MP (Soul).
+*   `NailDamage`: (integer) Nail damage level.
+*   `CharmSlots`: (integer) Number of available charm slots.
+*   `HasAllMoveAbilities`: (boolean) Whether all movement abilities are unlocked. If true, the `HasMoveAbilities` field is ignored.
+*   `HasMoveAbilities`: (object) An object containing booleans for each movement ability:
+    *   `hasAcidArmour`: (boolean) Has acid armor.
+    *   `hasDash`: (boolean) Has dash.
+    *   `hasWalljump`: (boolean) Has wall jump.
+    *   `hasSuperDash`: (boolean) Has super dash.
+    *   `hasShadowDash`: (boolean) Has shadow dash.
+    *   `hasDoubleJump`: (boolean) Has double jump.
+*   `AllSpelsLvl`: (integer) The level of all spells. If 1, the `SpelsLvl` is ignored.
+*   `SpelsLvl`: (object) An object containing integers for each spell level:
+    *   `fireballLevel`: (integer) Fireball level.
+    *   `quakeLevel`: (integer) Quake level.
+    *   `screamLevel`: (integer) Scream level.
+*   `HasAllNailArts`: (boolean) Whether all nail arts are unlocked. If true, the `HasNailArts` field is ignored.
+*   `HasNailArts`: (object) An object containing booleans for each nail art:
+    *   `hasCyclone`: (boolean) Has cyclone slash.
+    *   `hasDashSlash`: (boolean) Has dash slash.
+    *   `hasUpwardSlash`: (boolean) Has upward slash.
+*   `LvlDreamNail`: (integer) Dream nail level.
+*   `HasAllBindings`: (boolean) Whether all bindings are active. If true, the `Bindings` field is ignored.
+*   `Bindings`: (object) An object containing booleans for each binding:
+    *   `CharmsBinding`: (boolean) Charm binding.
+    *   `NailBinding`: (boolean) Nail binding.
+    *   `ShellBinding`: (boolean) Shell binding.
+    *   `SoulBinding`: (boolean) Soul binding.
 ## Usage
 
 Edit a HelperForChallenge.GlobalSettings.jsonn file with your desired presets in the format shown above.
