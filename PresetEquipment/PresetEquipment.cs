@@ -1,32 +1,207 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
+using ToggleableBindings;
+using Modding;
+using static GamepadVibrationMixer.GamepadVibrationEmission;
+using HelperForChallenge;
+using Newtonsoft.Json;
 
-namespace HelperForChallengePresetEquipment
+
+namespace HelperForChallenge
 {
-    public class PresetEquipment : PlayerData
-    {
-        public new int maxHealth = 9;
-        public new int nailDamage = 21;
-        public new int charmSlots = 3;
-        public new bool hasAcidArmour = true;
-        public new bool hasDash = true;
-        public new bool hasWalljump = true;
-        public new bool hasSuperDash = true;
-        public new bool hasShadowDash = true;
-        public new bool hasDoubleJump = true;
-        public new int fireballLevel = 2;
-        public new int quakeLevel = 2;
-        public new int screamLevel = 2;
-        //public new bool hasNailArt = true;
-        public new bool hasCyclone = true;
-        public new bool hasDashSlash = true;
-        public new bool hasUpwardSlash = true;
-        //public new bool hasAllNailArts = true;
-        public new bool hasDreamNail = true;
+    //public class PresetEquipment
+    //{
+    //    public int maxHealth;
+    //    public int maxMP;
+    //    public int nailDamage;
+    //    public int charmSlots;
+    //    public bool hasAcidArmour;
+    //    public bool hasDash;
+    //    public bool hasWalljump;
+    //    public bool hasSuperDash;
+    //    public bool hasShadowDash;
+    //    public bool hasDoubleJump;
+    //    public int fireballLevel;
+    //    public int quakeLevel;
+    //    public int screamLevel;
+    //    public bool hasCyclone;
+    //    public bool hasDashSlash;
+    //    public bool hasUpwardSlash;
+    //    public bool hasDreamNail;
 
-        //public void ApplyPreset()
-        //{
-        //    PlayerData.instance = this; 
-        //}
+
+
+    //    public void ReadData(PlayerData PD)
+    //    {
+    //        this.maxHealth = PD.maxHealth;
+    //        this.nailDamage = PD.nailDamage;
+    //        this.charmSlots = PD.charmSlots;
+    //        this.hasAcidArmour = PD.hasAcidArmour;
+    //        this.hasDash = PD.hasDash;
+    //        this.hasWalljump = PD.hasWalljump;
+    //        this.hasSuperDash = PD.hasSuperDash;
+    //        this.hasShadowDash = PD.hasShadowDash;
+    //        this.hasDoubleJump = PD.hasDoubleJump;
+    //        this.fireballLevel = PD.fireballLevel;
+    //        this.quakeLevel = PD.quakeLevel;
+    //        this.screamLevel = PD.screamLevel;
+    //        this.hasCyclone = PD.hasCyclone;
+    //        this.hasDashSlash = PD.hasDashSlash;
+    //        this.hasUpwardSlash = PD.hasUpwardSlash;
+    //        this.hasDreamNail = PD.hasDreamNail;
+    //    }
+    //    public PlayerData ApplyPreset(PlayerData PD)
+    //    {
+    //        PD.maxHealth = this.maxHealth;
+    //        PD.nailDamage = this.nailDamage;
+    //        PD.charmSlots = this.charmSlots;
+    //        PD.hasAcidArmour = this.hasAcidArmour;
+    //        PD.hasDash = this.hasDash;
+    //        PD.hasWalljump = this.hasWalljump;
+    //        PD.hasSuperDash = this.hasSuperDash;
+    //        PD.hasShadowDash = this.hasShadowDash;
+    //        PD.hasDoubleJump = this.hasDoubleJump;
+    //        PD.fireballLevel = this.fireballLevel;
+    //        PD.quakeLevel = this.quakeLevel;
+    //        PD.screamLevel = this.screamLevel;
+    //        PD.hasCyclone = this.hasCyclone;
+    //        PD.hasDashSlash = this.hasDashSlash;
+    //        PD.hasUpwardSlash = this.hasUpwardSlash;
+    //        PD.hasDreamNail = this.hasDreamNail;
+
+    //        return PD;
+    //    }
+    //    public void ApplyPreset(SavePresetEquipments savePreset)
+    //    {
+
+    //        ManagerResurse.SetPreset(savePreset);
+
+    //        //UIUpdate.Update();
+
+    //    }
+    //}
+    public class SavePresetEquipments
+    {
+        public string Name = "newGame";
+
+        public int MaxHealth = 5;
+        public int MaxMP = 99;
+        public int NailDamage = 5;
+        public int CharmSlots = 3;
+
+        public bool HasAllMoveAbilities = false;
+
+        public Dictionary<string, bool> HasMoveAbilities = new()
+        {
+
+            { "hasAcidArmour", false },
+            { "hasDash", false },
+            { "hasWalljump", false },
+            { "hasSuperDash", false },
+            { "hasShadowDash", false },
+            { "hasDoubleJump", false },
+
+        };
+        //public bool hasAcidArmour = true;
+        //public bool hasDash = true;
+        //public bool hasWalljump = true;
+        //public bool hasSuperDash = true;
+        //public bool hasShadowDash = true;
+        //public bool hasDoubleJump = true;
+        public int AllSpelsLvl;
+        public Dictionary<string, int> SpelsLvl = new()
+        {
+            { "fireballLevel", 0 },
+            { "quakeLevel", 0 },
+            { "screamLevel", 0 }
+
+        };
+        //public int fireballLevel = 2;
+        //public int quakeLevel = 2;
+        //public int screamLevel = 2;
+
+        public bool HasAllNailArts;
+
+        public Dictionary<string, bool> HasNailArts = new()
+        {
+            { "hasCyclone", false },
+            { "hasDashSlash", false },
+            { "hasUpwardSlash", false },
+
+        };
+        //public bool hasCyclone = true;
+        //public bool hasDashSlash = true;
+        //public bool hasUpwardSlash = true;
+        public int LvlDreamNail = 0;
+
+        public bool HasAllBindings;
+
+
+        public Dictionary<string, bool> Bindings = new()
+        {
+            { "CharmsBinding", false },
+            { "NailBinding", false },
+            { "ShellBinding", false },
+            { "SoulBinding", false },
+
+        };
+
+
+
     }
 
+    public class ListSavePreset()
+    {
+
+        public List<SavePresetEquipments> savePresetEquipment;
+
+        public void SetDefult()
+        {
+            Modding.Logger.Log("Start saveStandartPreset");
+
+            SavePresetEquipments standartPreset = new SavePresetEquipments();
+            Modding.Logger.Log("Start Load savePresetEquipment");
+
+
+
+            savePresetEquipment = new() {
+                DefaultPresets.O4(),
+                DefaultPresets.Ow(),
+                DefaultPresets.ItemLess(),
+                DefaultPresets.NMA(),
+                DefaultPresets.NNA(),
+                DefaultPresets.NailOnly(),
+
+             };
+
+        }
+        public void AddPresset(SavePresetEquipments savePreset)
+        {
+            if (savePreset == null || savePresetEquipment == null) return;
+
+            foreach (var savePresetCheck in savePresetEquipment)
+            {
+                if (savePresetCheck.Name == savePreset.Name)
+                {
+                    return;
+                }
+            }
+            savePresetEquipment.Add(savePreset);
+        }
+        public void RemovePresset(string namePreset)
+        {
+            if (namePreset == null || savePresetEquipment == null) return;
+
+            foreach (var savePresetCheck in savePresetEquipment)
+            {
+                if (savePresetCheck.Name == namePreset)
+                {
+                    savePresetEquipment.Remove(savePresetCheck);
+                }
+            }
+        }
+
+    }
 }
