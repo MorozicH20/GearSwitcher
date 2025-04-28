@@ -84,7 +84,9 @@ namespace HelperForChallenge
         {
             foreach (var MA in MoveAbilities)
             {
-                PlayerData.instance.SetBool(MA.Key, MA.Value || HasAllMoveAbilities);
+                PlayerData.instance.SetBool("has"+MA.Key, MA.Value || HasAllMoveAbilities);
+                PlayerData.instance.SetBool("can"+MA.Key, MA.Value || HasAllMoveAbilities);
+
             }
         }
 

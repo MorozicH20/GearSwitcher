@@ -96,12 +96,12 @@ namespace HelperForChallenge
         public Dictionary<string, bool> HasMoveAbilities = new()
         {
 
-            { "hasAcidArmour", false },
-            { "hasDash", false },
-            { "hasWalljump", false },
-            { "hasSuperDash", false },
-            { "hasShadowDash", false },
-            { "hasDoubleJump", false },
+            { "AcidArmour", false },
+            { "Dash", false },
+            { "Walljump", false },
+            { "SuperDash", false },
+            { "ShadowDash", false },
+            { "DoubleJump", false },
 
         };
         //public bool hasAcidArmour = true;
@@ -152,56 +152,4 @@ namespace HelperForChallenge
 
     }
 
-    public class ListSavePreset()
-    {
-
-        public List<SavePresetEquipments> savePresetEquipment;
-
-        public void SetDefult()
-        {
-            Modding.Logger.Log("Start saveStandartPreset");
-
-            SavePresetEquipments standartPreset = new SavePresetEquipments();
-            Modding.Logger.Log("Start Load savePresetEquipment");
-
-
-
-            savePresetEquipment = new() {
-                DefaultPresets.O4(),
-                DefaultPresets.Ow(),
-                DefaultPresets.ItemLess(),
-                DefaultPresets.NMA(),
-                DefaultPresets.NNA(),
-                DefaultPresets.NailOnly(),
-
-             };
-
-        }
-        public void AddPresset(SavePresetEquipments savePreset)
-        {
-            if (savePreset == null || savePresetEquipment == null) return;
-
-            foreach (var savePresetCheck in savePresetEquipment)
-            {
-                if (savePresetCheck.Name == savePreset.Name)
-                {
-                    return;
-                }
-            }
-            savePresetEquipment.Add(savePreset);
-        }
-        public void RemovePresset(string namePreset)
-        {
-            if (namePreset == null || savePresetEquipment == null) return;
-
-            foreach (var savePresetCheck in savePresetEquipment)
-            {
-                if (savePresetCheck.Name == namePreset)
-                {
-                    savePresetEquipment.Remove(savePresetCheck);
-                }
-            }
-        }
-
-    }
 }
