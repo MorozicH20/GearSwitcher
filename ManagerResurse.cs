@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ToggleableBindings;
-namespace HelperForChallenge
+namespace GearSwitcher
 {
     internal static class ManagerResurse
     {
@@ -51,7 +51,6 @@ namespace HelperForChallenge
 
             int MaxMPReserve = ((MaxMP - 99) / 33) * 33;
 
-            Modding.Logger.Log(MaxMPReserve);
             if (PlayerData.instance.MPReserveMax < MaxMPReserve)
             {
                 HeroController.instance.AddToMaxMPReserve(MaxMPReserve - PlayerData.instance.MPReserveMax);
@@ -60,7 +59,6 @@ namespace HelperForChallenge
             {
                 PlayerData.instance.MPReserveMax = MaxMPReserve;
             }
-            //HeroController.instance.ClearMP();
         }
 
         public static void SetNailDamage(int Damage)
@@ -84,8 +82,8 @@ namespace HelperForChallenge
         {
             foreach (var MA in MoveAbilities)
             {
-                PlayerData.instance.SetBool("has"+MA.Key, MA.Value || HasAllMoveAbilities);
-                PlayerData.instance.SetBool("can"+MA.Key, MA.Value || HasAllMoveAbilities);
+                PlayerData.instance.SetBool("has" + MA.Key, MA.Value || HasAllMoveAbilities);
+                PlayerData.instance.SetBool("can" + MA.Key, MA.Value || HasAllMoveAbilities);
 
             }
         }
@@ -154,7 +152,6 @@ namespace HelperForChallenge
 
             foreach (var B in Bindings)
             {
-                Modding.Logger.Log(IDBinding + B.Key);
                 if (B.Value || HasAllBindings)
                     BindingManager.ApplyBinding(IDBinding + B.Key);
                 else

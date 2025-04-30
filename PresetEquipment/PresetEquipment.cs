@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 using ToggleableBindings;
 using Modding;
 using static GamepadVibrationMixer.GamepadVibrationEmission;
-using HelperForChallenge;
+using GearSwitcher;
 using Newtonsoft.Json;
 
 
-namespace HelperForChallenge
+namespace GearSwitcher
 {
     //public class PresetEquipment
     //{

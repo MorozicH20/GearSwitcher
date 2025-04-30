@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ToggleableBindings;
 
-namespace HelperForChallenge
+namespace GearSwitcher
 {
     static class UIUpdate
     {
