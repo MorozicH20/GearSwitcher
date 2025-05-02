@@ -13,12 +13,12 @@ namespace GearSwitcher.Settings
 
     public class GlobalSettings
     {
+        public Dictionary<string, SavePresetEquipments> presetEquipments = new Dictionary<string, SavePresetEquipments>();
 
         [JsonConverter(typeof(PlayerActionSetConverter))]
         public KeyBindsAction Keybinds = new();
 
-        //[JsonProperty(ItemConverterType = typeof(StringEnumConverter))]
-        public Dictionary<string, SavePresetEquipments> presetEquipments = new Dictionary<string, SavePresetEquipments>();
+
 
     }
 }

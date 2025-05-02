@@ -18,30 +18,27 @@ namespace GearSwitcher
         public bool ToggleButtonInsideMenu => true;
 
         public GearSwitcher() : base(ModInfo.Name) { }
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            if (settings.presetEquipments == null || settings.Keybinds == null)
-            {
-                SetDefultPresets();
-            }
-            InputListener.Start();
-
-        }
-
         public void OnLoadGlobal(GlobalSettings s)
         {
             try
             {
-
                 if (s == null)
                 {
                     SetDefultPresets();
-
                     return;
                 }
                 settings = s;
+
+                if (settings.presetEquipments.Count < 1)
+                {
+                    ResetPresets();
+                }
+                Modding.Logger.Log($"{settings.presetEquipments}");
+
+
+                if (settings.Keybinds.Actions.Count < 1)
+                    ResetBinds();
+                Modding.Logger.Log($"{settings.Keybinds.Actions.Count}");
 
             }
             catch (Exception ex)
@@ -50,19 +47,29 @@ namespace GearSwitcher
             }
 
         }
-
-        GlobalSettings IGlobalSettings<GlobalSettings>.OnSaveGlobal()
+        public override void Initialize()
         {
-            if (settings.presetEquipments == null)
-            {
-                SetDefultPresets();
-            }
+            base.Initialize();
 
-            return settings;
+            //if (settings.presetEquipments == null
+            //    || settings.Keybinds == null
+            //    || settings.Keybinds.Actions == null
+            //    || settings.presetEquipments.Count < 1
+            //    || settings.Keybinds.Actions.Count < 1)
+            //{
+            //    SetDefultPresets();
+            //}
+            InputListener.Start();
+
         }
 
 
-        public static void SetDefultPresets()
+        GlobalSettings IGlobalSettings<GlobalSettings>.OnSaveGlobal()
+        {
+            return settings;
+        }
+
+        public static void ResetPresets()
         {
             var FullSave = DefaultPresets.FullSave();
             var O4 = DefaultPresets.O4();
@@ -71,6 +78,21 @@ namespace GearSwitcher
             var NMA = DefaultPresets.NMA();
             var NNA = DefaultPresets.NNA();
             var NailOnly = DefaultPresets.NailOnly();
+
+            var Custom1 = DefaultPresets.FullSave();
+            Custom1.Name = "Custom1";
+
+            var Custom2 = DefaultPresets.FullSave();
+            Custom2.Name = "Custom2";
+
+            var Custom3 = DefaultPresets.FullSave();
+            Custom3.Name = "Custom3";
+
+            var Custom4 = DefaultPresets.FullSave();
+            Custom4.Name = "Custom4";
+
+            var Custom5 = DefaultPresets.FullSave();
+            Custom5.Name = "Custom5";
 
             settings.presetEquipments = new() {
                 { FullSave.Name, FullSave },
@@ -81,10 +103,29 @@ namespace GearSwitcher
                 { NNA.Name, NNA },
                 { NailOnly.Name,NailOnly  },
 
+                { Custom1.Name, Custom1 },
+                { Custom2.Name, Custom2 },
+                { Custom3.Name, Custom3 },
+                { Custom4.Name, Custom4 },
+                { Custom5.Name, Custom5 },
+
+
              };
-            settings.Keybinds = new(settings.presetEquipments);
+            Modding.Logger.LogWarn("Set Defult Presets");
 
+        }
+        public static void ResetBinds()
+        {
+            settings.Keybinds = new();
+            Modding.Logger.LogWarn("Set Defult Binds");
 
+        }
+        public static void SetDefultPresets()
+        {
+            ResetPresets();
+            ResetBinds();
+
+            Modding.Logger.LogWarn("Set Defult Presets\\Binds");
         }
 
 

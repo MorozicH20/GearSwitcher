@@ -1,24 +1,27 @@
 ﻿using Satchel.BetterMenus;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GearSwitcher.ModMenu
 {
-    internal class KeyBindsMenu
+    internal class ListPresetMenu
     {
         private static Menu MenuRef;
         private static MenuScreen MenuScreenRef;
 
         internal static Menu PrepareMenu()
         {
-                Element[] elements = new Element[GearSwitcher.settings.Keybinds.Actions.Count];
+            List<Element> elements = new List<Element>();
 
-                for (int i = 0; i < GearSwitcher.settings.Keybinds.Actions.Count; i++)
-                {
-                    InControl.PlayerAction bind = GearSwitcher.settings.Keybinds.Actions[i];
-                    elements[i] = new KeyBind(bind.Name, bind);
-                }
-                var menu = new Menu("Keybinds", elements);
-                return menu;
+            foreach (var preset in GearSwitcher.settings.presetEquipments)
+            {
+                elements.Add(Blueprints.NavigateToMenu($"{preset.Key}", "", () => PresetConfigurationMenu.GetMenu(MenuRef.menuScreen, preset.Value)));
+            }
+            var menu = new Menu("Keybinds", elements.ToArray());
+            return menu;
         }
 
         internal static MenuScreen GetMenu(MenuScreen lastMenu)
@@ -35,5 +38,6 @@ namespace GearSwitcher.ModMenu
             }
             return MenuScreenRef;
         }
+
     }
 }
