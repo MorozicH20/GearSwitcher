@@ -1,72 +1,67 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Modding;
-using UnityEngine;
-using UObject = UnityEngine.Object;
-using ToggleableBindings;
-using UnityEngine.PlayerLoop;
+﻿using Modding;
 using GearSwitcher.ModMenu;
 using GearSwitcher.Settings;
+using System.Collections;
+using System;
+using Modding;
+using System;
+using System.Collections;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using MonoMod.RuntimeDetour;
+using UnityEngine;
+using Vasi;
 namespace GearSwitcher
 {
-    public class GearSwitcher : Mod, IGlobalSettings<GlobalSettings>, ICustomMenuMod
+    public class GearSwitcher : Mod, IGlobalSettings<GlobalSettings>, ILocalSettings<LocalSettings>, ICustomMenuMod
     {
 
         public static GlobalSettings settings = new();
+
+        public static LocalSettings localSettings = new();
 
         public bool ToggleButtonInsideMenu => true;
 
         public GearSwitcher() : base(ModInfo.Name) { }
         public void OnLoadGlobal(GlobalSettings s)
         {
-            try
+
+            if (s == null)
             {
-                if (s == null)
-                {
-                    SetDefultPresets();
-                    return;
-                }
-                settings = s;
-
-                if (settings.presetEquipments.Count < 1)
-                {
-                    ResetPresets();
-                }
-                Modding.Logger.Log($"{settings.presetEquipments}");
-
-
-                if (settings.Keybinds.Actions.Count < 1)
-                    ResetBinds();
-                Modding.Logger.Log($"{settings.Keybinds.Actions.Count}");
-
+                SetDefultPresets();
+                return;
             }
-            catch (Exception ex)
-            {
-                Modding.Logger.LogError(ex.ToString());
-            }
+            settings = s;
 
+            if (settings.presetEquipments.Count < 1)
+                ResetPresets();
+
+            if (settings.Keybinds.Actions.Count < 1)
+                ResetBinds();
+        }
+        GlobalSettings IGlobalSettings<GlobalSettings>.OnSaveGlobal()
+        {
+            return settings;
+        }
+
+        public void OnLoadLocal(LocalSettings s)
+        {
+            localSettings = s;
+        }
+
+        public LocalSettings OnSaveLocal()
+        {
+            return localSettings;
         }
         public override void Initialize()
         {
             base.Initialize();
 
-            //if (settings.presetEquipments == null
-            //    || settings.Keybinds == null
-            //    || settings.Keybinds.Actions == null
-            //    || settings.presetEquipments.Count < 1
-            //    || settings.Keybinds.Actions.Count < 1)
-            //{
-            //    SetDefultPresets();
-            //}
             InputListener.Start();
-
-        }
-
-
-        GlobalSettings IGlobalSettings<GlobalSettings>.OnSaveGlobal()
-        {
-            return settings;
         }
 
         public static void ResetPresets()
@@ -111,13 +106,11 @@ namespace GearSwitcher
 
 
              };
-            Modding.Logger.LogWarn("Set Defult Presets");
 
         }
         public static void ResetBinds()
         {
             settings.Keybinds = new();
-            Modding.Logger.LogWarn("Set Defult Binds");
 
         }
         public static void SetDefultPresets()
@@ -125,7 +118,6 @@ namespace GearSwitcher
             ResetPresets();
             ResetBinds();
 
-            Modding.Logger.LogWarn("Set Defult Presets\\Binds");
         }
 
 
@@ -133,5 +125,6 @@ namespace GearSwitcher
             BetterMenu.GetMenu(modListMenu, toggleDelegates);
 
         public override string GetVersion() => ModInfo.Version;
+
     }
 }

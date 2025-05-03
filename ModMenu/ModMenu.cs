@@ -1,8 +1,6 @@
 ﻿using Modding;
 using Satchel.BetterMenus;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
+
 
 namespace GearSwitcher.ModMenu
 {
@@ -15,6 +13,17 @@ namespace GearSwitcher.ModMenu
             return new Menu("Custom Knight", new Element[]{
                 Blueprints.NavigateToMenu( "Key Binds","keyboard shortcut change menu",()=> KeyBindsMenu.GetMenu(MenuRef.menuScreen)),
                 Blueprints.NavigateToMenu( "Presets configuration","Presets configuration change menu",()=> ListPresetMenu.GetMenu(MenuRef.menuScreen)),
+
+
+               new HorizontalOption(
+                    "Saving collections of charms", "This setting allows you to remember and put on the last put-on charm assembly separately for each preset.",
+                    ["False","True"],
+                    (setting) => { GearSwitcher.settings.isSaveСollectionsCharms= setting == 1; },
+                    () =>  GearSwitcher.settings.isSaveСollectionsCharms?1:0,
+                    Id:"isSaveEquippedCharms"),
+
+                new TextPanel(""),
+
                 new MenuButton("Set Defult Presets","",(_)=>GearSwitcher.SetDefultPresets())
             });
         }

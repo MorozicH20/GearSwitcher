@@ -1,6 +1,5 @@
 ﻿using Satchel.BetterMenus;
-using System;
-
+using System.Collections.Generic;
 namespace GearSwitcher.ModMenu
 {
     internal class KeyBindsMenu
@@ -10,15 +9,23 @@ namespace GearSwitcher.ModMenu
 
         internal static Menu PrepareMenu()
         {
-                Element[] elements = new Element[GearSwitcher.settings.Keybinds.Actions.Count];
+            List<Element> elements = new();
 
-                for (int i = 0; i < GearSwitcher.settings.Keybinds.Actions.Count; i++)
+            foreach (var bind in GearSwitcher.settings.Keybinds.Actions)
+            {
+                elements.Add(new KeyBind(bind.Name, bind));
+            }
+
+            elements.Add(new MenuButton(
+                "Reset Binds", "",
+                submitAction: (Mbutton) =>
                 {
-                    InControl.PlayerAction bind = GearSwitcher.settings.Keybinds.Actions[i];
-                    elements[i] = new KeyBind(bind.Name, bind);
-                }
-                var menu = new Menu("Keybinds", elements);
-                return menu;
+                    GearSwitcher.ResetBinds();
+                },
+                Id: "resetBinds"));
+
+            var menu = new Menu("Keybinds", elements.ToArray());
+            return menu;
         }
 
         internal static MenuScreen GetMenu(MenuScreen lastMenu)
@@ -27,7 +34,6 @@ namespace GearSwitcher.ModMenu
             {
                 MenuRef ??= PrepareMenu();
                 MenuScreenRef = MenuRef.GetMenuScreen(lastMenu);
-
             }
             else
             {

@@ -1,23 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
-using ToggleableBindings;
-using Modding;
-using GearSwitcher;
-using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+
 
 
 namespace GearSwitcher
 {
     public class SavePresetEquipments
     {
-        public string Name = "NewGame";
+        public string Name = "null";
 
         public int MaxHealth = 5;
         public int MaxMP = 99;
         public int NailDamage = 5;
         public int CharmSlots = 3;
+
+        public List<int> EquippedCharms = null;
 
         public bool HasAllMoveAbilities = false;
         public Dictionary<string, bool> HasMoveAbilities = new()

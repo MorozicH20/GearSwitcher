@@ -1,7 +1,5 @@
 ﻿using InControl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace GearSwitcher.Settings
 {
@@ -10,7 +8,7 @@ namespace GearSwitcher.Settings
         public PlayerAction FullSave;
         public PlayerAction O4;
         public PlayerAction Ow;
-        public PlayerAction Itemless;
+        public PlayerAction ItemLess;
         public PlayerAction NMA;
         public PlayerAction NNA;
         public PlayerAction NailOnly;
@@ -26,7 +24,7 @@ namespace GearSwitcher.Settings
             FullSave = CreatePlayerAction("FullSave");
             O4 = CreatePlayerAction("O4");
             Ow = CreatePlayerAction("Ow");
-            Itemless = CreatePlayerAction("Itemless");
+            ItemLess = CreatePlayerAction("ItemLess");
             NMA = CreatePlayerAction("NMA");
             NNA = CreatePlayerAction("NNA");
             NailOnly = CreatePlayerAction("NailOnly");
@@ -45,16 +43,10 @@ namespace GearSwitcher.Settings
             FullSave.AddDefaultBinding(Key.Key0);
             O4.AddDefaultBinding(Key.Key1);
             Ow.AddDefaultBinding(Key.Key2);
-            Itemless.AddDefaultBinding(Key.Key3);
+            ItemLess.AddDefaultBinding(Key.Key3);
             NMA.AddDefaultBinding(Key.Key4);
             NNA.AddDefaultBinding(Key.Key5);
             NailOnly.AddDefaultBinding(Key.Key6);
-
-            //Custom1.AddDefaultBinding(Key.);
-            //Custom2.AddDefaultBinding(Key.Key0);
-            //Custom3.AddDefaultBinding(Key.Key0);
-            //Custom4.AddDefaultBinding(Key.Key0);
-            //Custom5.AddDefaultBinding(Key.Key0);
         }
     }
 }

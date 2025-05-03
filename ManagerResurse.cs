@@ -1,9 +1,5 @@
-﻿using HutongGames.PlayMaker.Actions;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ToggleableBindings;
 namespace GearSwitcher
 {
@@ -11,13 +7,28 @@ namespace GearSwitcher
     {
         public static void SetPreset(SavePresetEquipments savePreset)
         {
+            GearSwitcher.localSettings.LastPreset = savePreset.Name;
+
+            List<int> _LastEquippedCharms = PlayerData.instance.equippedCharms.ToList();
+
+            RemoveCharms();
 
             SetHealth(savePreset.MaxHealth);
             SetVessel(savePreset.MaxMP);
+            SetCharmSlot(savePreset.CharmSlots);
+
+            if (GearSwitcher.settings.isSaveСollectionsCharms)
+            {
+                if (savePreset.EquippedCharms != null && savePreset.EquippedCharms.Count > 0)
+                    EquipCharms(savePreset.EquippedCharms);
+            }
+            else
+                EquipCharms(_LastEquippedCharms);
+
+
             UIUpdate.Update();
 
             SetNailDamage(savePreset.NailDamage);
-            SetCharmSlot(savePreset.CharmSlots);
             SetMoveAbilities(savePreset.HasMoveAbilities, savePreset.HasAllMoveAbilities);
             SetLvlSpels(savePreset.SpelsLvl, savePreset.AllSpelsLvl);
             SetNailArts(savePreset.HasNailArts, savePreset.HasAllNailArts);
@@ -29,19 +40,11 @@ namespace GearSwitcher
             if (MaxHealth < 1) MaxHealth = 1;
             if (MaxHealth > 9) MaxHealth = 9;
 
-            if (PlayerData.instance.maxHealth <= MaxHealth)
-            {
-                PlayerData.instance.maxHealth -= PlayerData.instance.maxHealth - MaxHealth;
-                PlayerData.instance.maxHealthBase -= PlayerData.instance.maxHealth - MaxHealth;
-                PlayerData.instance.MaxHealth();
-            }
-            else
-            {
-                PlayerData.instance.maxHealth -= PlayerData.instance.maxHealth - MaxHealth;
-                PlayerData.instance.maxHealthBase -= PlayerData.instance.maxHealth - MaxHealth;
-                PlayerData.instance.MaxHealth();
+            PlayerData.instance.maxHealth = MaxHealth;
+            PlayerData.instance.maxHealthBase = MaxHealth;
+            PlayerData.instance.prevHealth = MaxHealth;
+            PlayerData.instance.MaxHealth();
 
-            }
         }
 
         public static void SetVessel(int MaxMP)
@@ -68,12 +71,13 @@ namespace GearSwitcher
             Damage = ((Damage - 1) / 4 * 4) + 1;
             PlayerData.instance.nailDamage = Damage;
             PlayerData.instance.nailSmithUpgrades = (Damage - 1) / 4 - 1;
+            PlayMakerFSM.BroadcastEvent("UPDATE NAIL DAMAGE");
         }
 
         public static void SetCharmSlot(int CharmSlots)
         {
             if (CharmSlots < 3) CharmSlots = 3;
-            if (CharmSlots < 11) CharmSlots = 11;
+            if (CharmSlots > 11) CharmSlots = 11;
 
             PlayerData.instance.charmSlots = CharmSlots;
         }
@@ -159,6 +163,46 @@ namespace GearSwitcher
             }
         }
 
+        private static void RemoveCharms()
+        {
+            List<int> equippedCharms = PlayerData.instance.equippedCharms.ToList();
+            foreach (int idCharm in equippedCharms)
+            {
+                PlayerData.instance.SetBoolInternal("equippedCharm_" + idCharm, false);
+                PlayerData.instance.UnequipCharm(idCharm);
+            }
+
+            PlayerData.instance.overcharmed = false;
+
+            PlayerData.instance.CalculateNotchesUsed();
+
+            PlayMakerFSM.BroadcastEvent("CHARM EQUIP CHECK");
+            PlayMakerFSM.BroadcastEvent("CHARM INDICATOR CHECK");
+        }
+        private static void EquipCharms(List<int> Charms)
+        {
+            var usedCharmSlots = 0;
+            foreach (int idCharm in Charms)
+            {
+                if (PlayerData.instance.charmSlots <= usedCharmSlots) break;
+
+                PlayerData.instance.SetBoolInternal("equippedCharm_" + idCharm, true);
+                PlayerData.instance.EquipCharm(idCharm);
+                usedCharmSlots += PlayerData.instance.GetInt("charmCost_" + idCharm);
+
+            }
+
+
+            if (PlayerData.instance.charmSlots < usedCharmSlots)
+            {
+                PlayerData.instance.charmSlotsFilled = usedCharmSlots;
+                PlayerData.instance.overcharmed = true;
+            }
+            PlayerData.instance.CalculateNotchesUsed();
+
+            PlayMakerFSM.BroadcastEvent("CHARM EQUIP CHECK");
+            PlayMakerFSM.BroadcastEvent("CHARM INDICATOR CHECK");
+        }
         public static SavePresetEquipments GetPlayerData()
         {
             SavePresetEquipments value = new();

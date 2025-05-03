@@ -24,22 +24,28 @@ The mod uses JSON files to store and manage your presets. You can customize the 
 Preset File: The mod will read preset data from a JSON file located in the Hollow Knight game directory (Steam: "C:\Users\User\AppData\LocalLow\Team Cherry\Hollow Knight\GearSwitcher.GlobalSettings.json").
 Hotkey Customization: Configure hotkeys to switch between your presets.
 Preset JSON Structure
-The main configuration file is a JSON array. Each element in the array represents a preset. The configuration file is a JSON array. consisting of two dictionaries: for binds and presets
+The main configuration file is a JSON object. Each element in the array represents a preset. The configuration file is a JSON object. consisting of two dictionaries and boolean variable: for binds, presets and isSave—ollectionsCharms
 
 For example
 
 ```json
 
 {
-  "binds": {
+   "Keybinds": {
     "FullSave": "Key0",
-    "04": "Key1",
-    "0w": "Key2",
-    "Itemless": "Key3",
+    "O4": "Key1",
+    "Ow": "Key2",
+    "ItemLess": "Key3",
     "NMA": "Key4",
     "NNA": "Key5",
-    "NailOnly": "Key6"
+    "NailOnly": "Key6",
+    "Custom1": "None",
+    "Custom2": "None",
+    "Custom3": "None",
+    "Custom4": "None",
+    "Custom5": "None"
   },
+  "isSaveEquippedCharms": true,
   "presetEquipments": {
     "FullSave": {
       "Name": "FullSave",
@@ -47,6 +53,11 @@ For example
       "MaxMP": 198,
       "NailDamage": 21,
       "CharmSlots": 11,
+      "EquippedCharms": [
+        2,
+        1,
+        31
+      ],
       "HasAllMoveAbilities": true,
       "HasMoveAbilities": {
         "AcidArmour": false,
@@ -77,12 +88,13 @@ For example
         "SoulBinding": false
       }
     },
-    "04": {
-      "Name": "04",
+    "O4": {
+      "Name": "O4",
       "MaxHealth": 9,
       "MaxMP": 198,
       "NailDamage": 5,
       "CharmSlots": 11,
+      "EquippedCharms": null,
       "HasAllMoveAbilities": true,
       "HasMoveAbilities": {
         "AcidArmour": false,
@@ -112,7 +124,7 @@ For example
         "ShellBinding": false,
         "SoulBinding": false
       }
-    }
+    },
   }
 ```
 
@@ -120,7 +132,7 @@ For example
 
 ### Explanation : binds
 
-**Preset Name**: The key in the `"binds"` object is the exact name of a gear preset defined in the main JSON array. For example, if you have a preset with `"Name": "04"`, then you can bind a key to it.\
+**Preset Name**: The key in the `"binds"` object is the exact name of a gear preset defined in the main JSON array. For example, if you have a preset with `"Name": "O4"`, then you can bind a key to it.\
 
 **Keyboard Key**: The value associated with each preset name is the keyboard key that activates that preset. The key names are based on the KeyCode enum in In Control. \
 
@@ -156,6 +168,7 @@ Example key values:
 *   `MaxMP`: (integer) Maximum MP (Soul).
 *   `NailDamage`: (integer) Nail damage level.
 *   `CharmSlots`: (integer) Number of available charm slots.
+*   `EquippedCharms` (List<int>) List of the latest equipped charms
 *   `HasAllMoveAbilities`: (boolean) Whether all movement abilities are unlocked. If true, the `HasMoveAbilities` field is ignored.
 *   `HasMoveAbilities`: (object) An object containing booleans for each movement ability:
     *   `AcidArmour`: (boolean) Has acid armor.
@@ -181,15 +194,12 @@ Example key values:
     *   `NailBinding`: (boolean) Nail binding.
     *   `ShellBinding`: (boolean) Shell binding.
     *   `SoulBinding`: (boolean) Soul binding.
-## Usage
 
-Edit a GearSwitcher.GlobalSettings.jsonn file with your desired presets in the format shown above.
-In-game, press the configured hotkeys to cycle through your presets.
+      * 
+## Present and Bind Customization via Menu
 
-## Future Features
+Gear Switcher offers a interface to manage your gear presets and assign hotkeys:
 
-UI for preset management within the game.
+* **Reset Configuration Menu**: The mod provides an in-game menu where you can add, delete, and edit your gear presets. This allows you to easily adapt your loadouts to different situations and playstyles. 
 
-## Test Version (v1.0.0.0-beta
-
-This is a test version of the mod. Currently, it includes 4 pre-defined presets. You can activate these presets by pressing the 1, 2, 3, and 4 keys on your keyboard respectively during gameplay. These keys directly select the corresponding preset from the HelperForChallenge.GlobalSettings.json file.
+* **Bind Assignment Menu**: For each preset, you can configure a hotkey that will instantly activate that preset. Key assignments are done in a dedicated binds menu.

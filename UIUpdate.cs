@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ToggleableBindings;
+﻿
 
 namespace GearSwitcher
 {
@@ -11,8 +6,6 @@ namespace GearSwitcher
     {
         public static void Update()
         {
-
-
             if (!GameCameras.instance.hudCanvas.gameObject.activeInHierarchy)
                 GameCameras.instance.hudCanvas.gameObject.SetActive(true);
             else
@@ -21,7 +14,5 @@ namespace GearSwitcher
                 GameCameras.instance.hudCanvas.gameObject.SetActive(true);
             }
         }
-
-
     }
 }

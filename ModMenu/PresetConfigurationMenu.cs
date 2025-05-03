@@ -1,10 +1,5 @@
-﻿using GearSwitcher.Settings;
-using Satchel.BetterMenus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Satchel.BetterMenus;
+
 
 namespace GearSwitcher.ModMenu
 {
@@ -27,11 +22,11 @@ namespace GearSwitcher.ModMenu
 
                new CustomSlider(
                     name: "Max health",
-                    storeValue: val => // to store the value when the slider is changed by user
+                    storeValue: val => 
                     {
                        preset.MaxHealth = (int) val;
                     },
-                    loadValue: () =>  preset.MaxHealth, //to load the value on menu creation
+                    loadValue: () =>  preset.MaxHealth, 
                     minValue: 1,
                     maxValue: 9,
                     wholeNumbers: true
@@ -60,11 +55,11 @@ namespace GearSwitcher.ModMenu
 
                 new CustomSlider(
                     name: "Charm Slots",
-                    storeValue: val => // to store the value when the slider is changed by user
+                    storeValue: val => 
                     {
                        preset.CharmSlots = (int) val;
                     },
-                    loadValue: () =>  preset.CharmSlots, //to load the value on menu creation
+                    loadValue: () =>  preset.CharmSlots, 
                     minValue: 3,
                     maxValue: 11,
                     wholeNumbers: true
@@ -243,21 +238,16 @@ namespace GearSwitcher.ModMenu
 
         internal static MenuScreen GetMenu(MenuScreen lastMenu, SavePresetEquipments preset)
         {
-            try
+            if (MenuScreenRef == null)
             {
-                if (MenuScreenRef == null)
-                {
-                    MenuRef ??= PrepareMenu(preset);
-                    MenuScreenRef = MenuRef.GetMenuScreen(lastMenu);
-
-                }
-                else
-                {
-                    MenuRef.returnScreen = lastMenu;
-                }
+                MenuRef ??= PrepareMenu(preset);
+                MenuScreenRef = MenuRef.GetMenuScreen(lastMenu);
 
             }
-            catch (Exception ex) { Modding.Logger.Log(ex.Message); }
+            else
+            {
+                MenuRef.returnScreen = lastMenu;
+            }
             return MenuScreenRef;
         }
 

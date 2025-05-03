@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace GearSwitcher
 {
     internal static class DefaultPresets
@@ -27,7 +22,7 @@ namespace GearSwitcher
         {
             SavePresetEquipments value = new();
 
-            value.Name = "04";
+            value.Name = "O4";
             value.MaxHealth = 9;
             value.MaxMP = 198;
             value.NailDamage = 5;
@@ -43,7 +38,7 @@ namespace GearSwitcher
         {
             SavePresetEquipments value = new();
 
-            value.Name = "0w";
+            value.Name = "Ow";
             value.MaxHealth = 9;
             value.MaxMP = 198;
             value.NailDamage = 5;
@@ -60,7 +55,7 @@ namespace GearSwitcher
         {
             SavePresetEquipments value = new();
 
-            value.Name = "Itemless";
+            value.Name = "ItemLess";
 
             return value;
         }

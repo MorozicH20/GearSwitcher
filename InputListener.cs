@@ -1,8 +1,7 @@
-﻿using GearSwitcher.ModMenu;
-using Satchel;
+﻿using Satchel;
 using UnityEngine;
 using System.Collections;
-using System;
+using System.Linq;
 
 namespace GearSwitcher
 {
@@ -17,34 +16,24 @@ namespace GearSwitcher
 
         private static IEnumerator ListenForInput()
         {
-
             while (true)
             {
-                try
+                for (int i = 0; i < GearSwitcher.settings.Keybinds.Actions.Count; i++)
                 {
 
-                    for (int i = 0; i < GearSwitcher.settings.Keybinds.Actions.Count; i++)
+                    if (GameManager.instance != null && !(GameManager.instance.isPaused))
                     {
 
-                        if (GameManager.instance != null && !(GameManager.instance.isPaused))
+                        if (GearSwitcher.settings.Keybinds.Actions[i].WasPressed)
                         {
-
-                            if (GearSwitcher.settings.Keybinds.Actions[i].WasPressed)
-                            {
-                                ManagerResurse.SetPreset(GearSwitcher.settings.presetEquipments[GearSwitcher.settings.Keybinds.Actions[i].Name]);
-                            }
+                            if (GearSwitcher.settings.isSaveСollectionsCharms || GearSwitcher.localSettings.LastPreset != null)
+                                GearSwitcher.settings.presetEquipments[GearSwitcher.localSettings.LastPreset].EquippedCharms = PlayerData.instance.equippedCharms.ToList();
+                            ManagerResurse.SetPreset(GearSwitcher.settings.presetEquipments[GearSwitcher.settings.Keybinds.Actions[i].Name]);
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    Modding.Logger.Log(ex.Message);
-
-                }
                 yield return new WaitForEndOfFrame();
             }
-
         }
-
     }
 }
