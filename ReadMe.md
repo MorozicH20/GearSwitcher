@@ -14,7 +14,7 @@ Preset Management: Save and load custom gear loadouts.
 In-Game Switching: Quickly swap between presets using customizable hotkeys.
 Installation
 Make sure you have the Hollow Knight modding API installed (e.g., Modding API).
-Place the GearSwitcher.dll file into your Hollow Knight’s Mods folder.
+Place the GearSwitcher.dll file into your Hollow Knightâ€™s Mods folder.
 Run the game.
 
 ## Configuration
@@ -24,7 +24,7 @@ The mod uses JSON files to store and manage your presets. You can customize the 
 Preset File: The mod will read preset data from a JSON file located in the Hollow Knight game directory (Steam: "C:\Users\User\AppData\LocalLow\Team Cherry\Hollow Knight\GearSwitcher.GlobalSettings.json").
 Hotkey Customization: Configure hotkeys to switch between your presets.
 Preset JSON Structure
-The main configuration file is a JSON object. Each element in the array represents a preset. The configuration file is a JSON object. consisting of two dictionaries and boolean variable: for binds, presets and isSaveÑollectionsCharms
+The main configuration file is a JSON object. Each element in the array represents a preset. The configuration file is a JSON object. consisting of two dictionaries and boolean variable: for binds, presets and isSaveÃ‘ollectionsCharms
 
 For example
 
@@ -88,8 +88,8 @@ For example
         "SoulBinding": false
       }
     },
-    "O4": {
-      "Name": "O4",
+    "04": {
+      "Name": "04",
       "MaxHealth": 9,
       "MaxMP": 198,
       "NailDamage": 5,
@@ -138,10 +138,10 @@ For example
 
 Example key values:
 
-*Key 0, Key 1, Key 2, …, Key 9 (the number keys on the main keyboard)
-* A, B, C, …, Z (letter keys)
-* F1, F2, …, F12 (function keys)
-* Pad0, Pad1, … Pad9 (keypad number keys)
+*Key 0, Key 1, Key 2, â€¦, Key 9 (the number keys on the main keyboard)
+* A, B, C, â€¦, Z (letter keys)
+* F1, F2, â€¦, F12 (function keys)
+* Pad0, Pad1, â€¦ Pad9 (keypad number keys)
 * LeftShift, RightShift, LeftControl, RightControl, LeftAlt, RightAlt
 * Space
 * Return (Enter)
@@ -152,7 +152,7 @@ Example key values:
 
 **Valid Key Codes**: Only use valid KeyCode values from InControl. Using an invalid key code will likely result in an error.\
 
-**Key Conflicts**: Be aware that key bindings may conflict with other mods or with the game’s default controls. If you experience conflicts, you’ll need to choose different key bindings.\
+**Key Conflicts**: Be aware that key bindings may conflict with other mods or with the gameâ€™s default controls. If you experience conflicts, youâ€™ll need to choose different key bindings.\
 
 **Missing Bindings**: If a preset does not have a binding defined in the "binds" object, it cannot be activated via a hotkey.\
 
