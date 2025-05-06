@@ -1,5 +1,6 @@
 ﻿using Satchel.BetterMenus;
 using System.Collections.Generic;
+using System.Linq;
 namespace GearSwitcher.ModMenu
 {
     internal class KeyBindsMenu
@@ -11,9 +12,10 @@ namespace GearSwitcher.ModMenu
         {
             List<Element> elements = new();
 
-            foreach (var bind in GearSwitcher.settings.Keybinds.Actions)
+            for (int i = 0; i < GearSwitcher.settings.Keybinds.Actions.Count; i++)
             {
-                elements.Add(new KeyBind(bind.Name, bind));
+                InControl.PlayerAction bind = GearSwitcher.settings.Keybinds.Actions[i];
+                elements.Add(new KeyBind(GearSwitcher.settings.presetEquipments.Values.ToArray()[i].Name, bind));
             }
 
             elements.Add(new MenuButton(

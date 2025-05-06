@@ -1,4 +1,6 @@
 ﻿using Satchel.BetterMenus;
+using System;
+using System.Linq;
 
 
 namespace GearSwitcher.ModMenu
@@ -11,7 +13,7 @@ namespace GearSwitcher.ModMenu
         internal static Menu PrepareMenu(SavePresetEquipments preset)
         {
 
-            var menu = new Menu("Keybinds", new Element[]{
+            var menu = new Menu($"preset:{preset.Name}", new Element[]{
 
                //new HorizontalOption(
                //     "Max health", "",
@@ -22,29 +24,41 @@ namespace GearSwitcher.ModMenu
 
                new CustomSlider(
                     name: "Max health",
-                    storeValue: val => 
+                    storeValue: val =>
                     {
                        preset.MaxHealth = (int) val;
                     },
-                    loadValue: () =>  preset.MaxHealth, 
+                    loadValue: () =>  preset.MaxHealth,
                     minValue: 1,
                     maxValue: 9,
                     wholeNumbers: true
                     ),
 
                new HorizontalOption(
-                    "Max Soul", "",
-                    ["99","132","165","198"],
-                    (setting) => { preset.MaxMP = (setting+3)*33; },
-                    () => preset.MaxMP/33-3,
+                    "Soul Vessels", "",
+                    ["0","1","2","3"],
+                    (setting) => { preset.SoulVessels = (setting); },
+                    () => preset.SoulVessels,
                     Id:"MaxSoul"),
 
-               new HorizontalOption(
-                    "Nail Damage", "",
-                    ["5","9","13","17","21"],
-                    (setting) => { preset.NailDamage = (setting+1)*4+1; },
-                    () => (preset.NailDamage-1)/4-1,
-                    Id:"NailDamage"),
+               //new HorizontalOption(
+               //     "Nail Damage", "",
+               //     ["5","9","13","17","21"],
+               //     (setting) => { preset.NailDamage = (setting+1)*4+1; },
+               //     () => (preset.NailDamage-1)/4-1,
+               //     Id:"NailDamage"),
+
+               new CustomSlider(
+                    name: "Nail Damage",
+                    storeValue: val =>
+                    {
+                       preset.NailDamage = (int) val;
+                    },
+                    loadValue: () =>  preset.NailDamage,
+                    minValue: 1,
+                    maxValue: 21,
+                    wholeNumbers: true
+                    ),
 
                //new HorizontalOption(
                //     "Charm Slots", "",
@@ -55,11 +69,11 @@ namespace GearSwitcher.ModMenu
 
                 new CustomSlider(
                     name: "Charm Slots",
-                    storeValue: val => 
+                    storeValue: val =>
                     {
                        preset.CharmSlots = (int) val;
                     },
-                    loadValue: () =>  preset.CharmSlots, 
+                    loadValue: () =>  preset.CharmSlots,
                     minValue: 3,
                     maxValue: 11,
                     wholeNumbers: true
@@ -70,7 +84,9 @@ namespace GearSwitcher.ModMenu
                new HorizontalOption(
                     "All Movement", "",
                     ["False","True"],
-                    (setting) => { preset.HasAllMoveAbilities = setting == 1; },
+                    (setting) => {
+                        preset.HasAllMoveAbilities = setting == 1;
+                    },
                     () => preset.HasAllMoveAbilities?1:0,
                     Id:"HasAllMoveAbilities"),
 
@@ -238,16 +254,8 @@ namespace GearSwitcher.ModMenu
 
         internal static MenuScreen GetMenu(MenuScreen lastMenu, SavePresetEquipments preset)
         {
-            if (MenuScreenRef == null)
-            {
-                MenuRef ??= PrepareMenu(preset);
+                MenuRef = PrepareMenu(preset);
                 MenuScreenRef = MenuRef.GetMenuScreen(lastMenu);
-
-            }
-            else
-            {
-                MenuRef.returnScreen = lastMenu;
-            }
             return MenuScreenRef;
         }
 

@@ -14,7 +14,7 @@ namespace GearSwitcher
             RemoveCharms();
 
             SetHealth(savePreset.MaxHealth);
-            SetVessel(savePreset.MaxMP);
+            SetVessel(savePreset.SoulVessels);
             SetCharmSlot(savePreset.CharmSlots);
 
             if (GearSwitcher.settings.isSaveСollectionsCharms)
@@ -47,28 +47,25 @@ namespace GearSwitcher
 
         }
 
-        public static void SetVessel(int MaxMP)
+        public static void SetVessel(int Vessels)
         {
-            if (MaxMP < 99) MaxMP = 99;
-            if (MaxMP > 198) MaxMP = 198;
+            if (Vessels < 0) Vessels = 0;
+            if (Vessels > 3) Vessels = 3;
 
-            int MaxMPReserve = ((MaxMP - 99) / 33) * 33;
-
-            if (PlayerData.instance.MPReserveMax < MaxMPReserve)
+            if (PlayerData.instance.MPReserveMax < Vessels*33)
             {
-                HeroController.instance.AddToMaxMPReserve(MaxMPReserve - PlayerData.instance.MPReserveMax);
+                HeroController.instance.AddToMaxMPReserve(Vessels*33 - PlayerData.instance.MPReserveMax);
             }
             else
             {
-                PlayerData.instance.MPReserveMax = MaxMPReserve;
+                PlayerData.instance.MPReserveMax = Vessels * 33;
             }
         }
 
         public static void SetNailDamage(int Damage)
         {
-            if (Damage < 5) Damage = 5;
+            if (Damage < 1) Damage = 1;
             if (Damage > 21) Damage = 21;
-            Damage = ((Damage - 1) / 4 * 4) + 1;
             PlayerData.instance.nailDamage = Damage;
             PlayerData.instance.nailSmithUpgrades = (Damage - 1) / 4 - 1;
             PlayMakerFSM.BroadcastEvent("UPDATE NAIL DAMAGE");
@@ -168,6 +165,8 @@ namespace GearSwitcher
             List<int> equippedCharms = PlayerData.instance.equippedCharms.ToList();
             foreach (int idCharm in equippedCharms)
             {
+                if (idCharm == 36 && PlayerData.instance.GetInt("charmCost_" + idCharm) == 0) continue;
+
                 PlayerData.instance.SetBoolInternal("equippedCharm_" + idCharm, false);
                 PlayerData.instance.UnequipCharm(idCharm);
             }
@@ -184,6 +183,8 @@ namespace GearSwitcher
             var usedCharmSlots = 0;
             foreach (int idCharm in Charms)
             {
+                if (idCharm == 36 && PlayerData.instance.GetInt("charmCost_" + idCharm) == 0) continue;
+
                 if (PlayerData.instance.charmSlots <= usedCharmSlots) break;
 
                 PlayerData.instance.SetBoolInternal("equippedCharm_" + idCharm, true);

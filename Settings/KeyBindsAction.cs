@@ -6,6 +6,7 @@ namespace GearSwitcher.Settings
     public class KeyBindsAction : PlayerActionSet
     {
         public PlayerAction FullSave;
+        public PlayerAction Ab;
         public PlayerAction O4;
         public PlayerAction Ow;
         public PlayerAction ItemLess;
@@ -22,6 +23,7 @@ namespace GearSwitcher.Settings
         {
 
             FullSave = CreatePlayerAction("FullSave");
+            Ab = CreatePlayerAction("Ab");
             O4 = CreatePlayerAction("O4");
             Ow = CreatePlayerAction("Ow");
             ItemLess = CreatePlayerAction("ItemLess");
@@ -41,12 +43,13 @@ namespace GearSwitcher.Settings
         private void DefaultBinds()
         {
             FullSave.AddDefaultBinding(Key.Key0);
-            O4.AddDefaultBinding(Key.Key1);
-            Ow.AddDefaultBinding(Key.Key2);
-            ItemLess.AddDefaultBinding(Key.Key3);
-            NMA.AddDefaultBinding(Key.Key4);
-            NNA.AddDefaultBinding(Key.Key5);
-            NailOnly.AddDefaultBinding(Key.Key6);
+            Ab.AddDefaultBinding(Key.Key1);
+            O4.AddDefaultBinding(Key.Key2);
+            Ow.AddDefaultBinding(Key.Key3);
+            ItemLess.AddDefaultBinding(Key.Key4);
+            NMA.AddDefaultBinding(Key.Key5);
+            NNA.AddDefaultBinding(Key.Key6);
+            NailOnly.AddDefaultBinding(Key.Key7);
         }
     }
 }

@@ -15,9 +15,11 @@ namespace GearSwitcher.ModMenu
 
             foreach (var preset in GearSwitcher.settings.presetEquipments)
             {
-                elements.Add(Blueprints.NavigateToMenu($"{preset.Key}", "", () => PresetConfigurationMenu.GetMenu(MenuRef.menuScreen, preset.Value)));
+                if (preset.Key.Contains("Custom"))
+                    elements.Add(Blueprints.NavigateToMenu($"{preset.Value.Name}", "", () => PresetConfigurationMenu.GetMenu(MenuRef.menuScreen, preset.Value)));
+
             }
-            var menu = new Menu("Keybinds", elements.ToArray());
+            var menu = new Menu("List Custom presets", elements.ToArray());
             return menu;
         }
 

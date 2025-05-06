@@ -1,20 +1,9 @@
 ﻿using Modding;
 using GearSwitcher.ModMenu;
 using GearSwitcher.Settings;
-using System.Collections;
 using System;
-using Modding;
-using System;
-using System.Collections;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using MonoMod.RuntimeDetour;
-using UnityEngine;
-using Vasi;
+
+
 namespace GearSwitcher
 {
     public class GearSwitcher : Mod, IGlobalSettings<GlobalSettings>, ILocalSettings<LocalSettings>, ICustomMenuMod
@@ -29,19 +18,21 @@ namespace GearSwitcher
         public GearSwitcher() : base(ModInfo.Name) { }
         public void OnLoadGlobal(GlobalSettings s)
         {
+                if (s == null)
+                {
+                    SetDefultPresets();
+                    return;
+                }
+                settings = s;
 
-            if (s == null)
-            {
-                SetDefultPresets();
-                return;
-            }
-            settings = s;
 
-            if (settings.presetEquipments.Count < 1)
-                ResetPresets();
+                if (settings.presetEquipments.Count < 1)
+                    ResetPresets();
 
-            if (settings.Keybinds.Actions.Count < 1)
-                ResetBinds();
+                if (settings.Keybinds.Actions.Count < 1)
+                    ResetBinds();
+
+            
         }
         GlobalSettings IGlobalSettings<GlobalSettings>.OnSaveGlobal()
         {
@@ -61,12 +52,16 @@ namespace GearSwitcher
         {
             base.Initialize();
 
+            if (settings.presetEquipments.Count < 1)
+                ResetPresets();
+
             InputListener.Start();
         }
 
         public static void ResetPresets()
         {
             var FullSave = DefaultPresets.FullSave();
+            var Ab = DefaultPresets.Ab();
             var O4 = DefaultPresets.O4();
             var Ow = DefaultPresets.Ow();
             var ItemLess = DefaultPresets.ItemLess();
@@ -91,6 +86,7 @@ namespace GearSwitcher
 
             settings.presetEquipments = new() {
                 { FullSave.Name, FullSave },
+                { Ab.Name,Ab  },
                 { O4.Name, O4 },
                 { Ow.Name, Ow },
                 { ItemLess.Name, ItemLess },

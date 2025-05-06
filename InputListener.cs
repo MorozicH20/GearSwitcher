@@ -28,7 +28,7 @@ namespace GearSwitcher
                         {
                             if (GearSwitcher.settings.isSaveСollectionsCharms || GearSwitcher.localSettings.LastPreset != null)
                                 GearSwitcher.settings.presetEquipments[GearSwitcher.localSettings.LastPreset].EquippedCharms = PlayerData.instance.equippedCharms.ToList();
-                            ManagerResurse.SetPreset(GearSwitcher.settings.presetEquipments[GearSwitcher.settings.Keybinds.Actions[i].Name]);
+                            ManagerResurse.SetPreset(GearSwitcher.settings.presetEquipments[GearSwitcher.settings.presetEquipments.Keys.ToArray()[i]]);
                         }
                     }
                 }

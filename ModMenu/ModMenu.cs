@@ -10,7 +10,7 @@ namespace GearSwitcher.ModMenu
 
         internal static Menu PrepareMenu()
         {
-            return new Menu("Custom Knight", new Element[]{
+            return new Menu("Gear Switcher", new Element[]{
                 Blueprints.NavigateToMenu( "Key Binds","keyboard shortcut change menu",()=> KeyBindsMenu.GetMenu(MenuRef.menuScreen)),
                 Blueprints.NavigateToMenu( "Presets configuration","Presets configuration change menu",()=> ListPresetMenu.GetMenu(MenuRef.menuScreen)),
 

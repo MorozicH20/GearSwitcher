@@ -9,7 +9,7 @@ namespace GearSwitcher
         public string Name = "null";
 
         public int MaxHealth = 5;
-        public int MaxMP = 99;
+        public int SoulVessels = 0;
         public int NailDamage = 5;
         public int CharmSlots = 3;
 
@@ -27,6 +27,7 @@ namespace GearSwitcher
             { "DoubleJump", false },
 
         };
+
         public int AllSpelsLvl;
         public Dictionary<string, int> SpelsLvl = new()
         {
