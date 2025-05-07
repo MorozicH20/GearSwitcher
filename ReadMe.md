@@ -10,21 +10,29 @@ This mod allows players to quickly switch between pre-defined gear presets in Ho
 
 ## Features
 
-Preset Management: Save and load custom gear loadouts.
-In-Game Switching: Quickly swap between presets using customizable hotkeys.
-Installation
-Make sure you have the Hollow Knight modding API installed (e.g., Modding API).
-Place the GearSwitcher.dll file into your Hollow Knight’s Mods folder.
+**Preset Management**: Save and load custom gear loadouts and charms builds.\
+
+**In-Game Switching**: Quickly swap between presets using customizable hotkeys.\
+
+**Free Charms**: the opportunity to make charms free
+
+### Installation
+Make sure you have the Hollow Knight modding API installed (e.g., Modding API).\
+
+Place the GearSwitcher.dll file into your Hollow Knight’s Mods folder.\
+
 Run the game.
 
 ## Configuration
 
-The mod uses JSON files to store and manage your presets. You can customize the following settings:
+The mod uses JSON files to store and manage your presets. You can customize the following settings:\
 
-Preset File: The mod will read preset data from a JSON file located in the Hollow Knight game directory (Steam: "C:\Users\User\AppData\LocalLow\Team Cherry\Hollow Knight\GearSwitcher.GlobalSettings.json").
-Hotkey Customization: Configure hotkeys to switch between your presets.
-Preset JSON Structure
-The main configuration file is a JSON object. Each element in the array represents a preset. The configuration file is a JSON object. consisting of two dictionaries and boolean variable: for binds, presets and isSaveÑollectionsCharms
+**Preset File**: The mod will read preset data from a JSON file located in the Hollow Knight game directory (Steam: "C:\Users\User\AppData\LocalLow\Team Cherry\Hollow Knight\GearSwitcher.GlobalSettings.json").\
+
+**Hotkey Customization**: Configure hotkeys to switch between your presets.
+
+### Preset JSON Structure
+The main configuration file is a JSON object. The configuration file is a JSON object. consisting of two dictionaries and two boolean variable: binds, presets, isSaveCollectionsCharms and isFreeCharms
 
 For example
 
@@ -46,6 +54,7 @@ For example
     "Custom5": "None"
   },
   "isSaveEquippedCharms": true,
+  "isFreeCharms": false,
   "presetEquipments": {
     "FullSave": {
       "Name": "FullSave",
@@ -203,3 +212,7 @@ Gear Switcher offers a interface to manage your gear presets and assign hotkeys:
 * **Reset Configuration Menu**: The mod provides an in-game menu where you can add, delete, and edit your gear presets. This allows you to easily adapt your loadouts to different situations and playstyles. 
 
 * **Bind Assignment Menu**: For each preset, you can configure a hotkey that will instantly activate that preset. Key assignments are done in a dedicated binds menu.
+
+* **Save Charms Builds**: Allow you to save charms build separately for each preset
+
+* **Free Charms**: If true, it will make all the charms free if false, it will return the standard cost of the amulets.

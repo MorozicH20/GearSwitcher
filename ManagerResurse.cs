@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ToggleableBindings;
 namespace GearSwitcher
@@ -10,6 +11,9 @@ namespace GearSwitcher
             GearSwitcher.localSettings.LastPreset = savePreset.Name;
 
             List<int> _LastEquippedCharms = PlayerData.instance.equippedCharms.ToList();
+
+
+            SetBindings(savePreset.Bindings, savePreset.HasAllBindings);
 
             RemoveCharms();
 
@@ -26,14 +30,14 @@ namespace GearSwitcher
                 EquipCharms(_LastEquippedCharms);
 
 
-            UIUpdate.Update();
 
             SetNailDamage(savePreset.NailDamage);
             SetMoveAbilities(savePreset.HasMoveAbilities, savePreset.HasAllMoveAbilities);
             SetLvlSpels(savePreset.SpelsLvl, savePreset.AllSpelsLvl);
             SetNailArts(savePreset.HasNailArts, savePreset.HasAllNailArts);
             SetLvlDreamNail(savePreset.LvlDreamNail);
-            SetBindings(savePreset.Bindings, savePreset.HasAllBindings);
+
+            UIUpdate.Update();
         }
         public static void SetHealth(int MaxHealth)
         {
@@ -44,7 +48,6 @@ namespace GearSwitcher
             PlayerData.instance.maxHealthBase = MaxHealth;
             PlayerData.instance.prevHealth = MaxHealth;
             PlayerData.instance.MaxHealth();
-
         }
 
         public static void SetVessel(int Vessels)
@@ -52,9 +55,9 @@ namespace GearSwitcher
             if (Vessels < 0) Vessels = 0;
             if (Vessels > 3) Vessels = 3;
 
-            if (PlayerData.instance.MPReserveMax < Vessels*33)
+            if (PlayerData.instance.MPReserveMax < Vessels * 33)
             {
-                HeroController.instance.AddToMaxMPReserve(Vessels*33 - PlayerData.instance.MPReserveMax);
+                HeroController.instance.AddToMaxMPReserve(Vessels * 33 - PlayerData.instance.MPReserveMax);
             }
             else
             {
@@ -160,13 +163,12 @@ namespace GearSwitcher
             }
         }
 
-        private static void RemoveCharms()
+        internal static void RemoveCharms()
         {
             List<int> equippedCharms = PlayerData.instance.equippedCharms.ToList();
             foreach (int idCharm in equippedCharms)
             {
-                if (idCharm == 36 && PlayerData.instance.GetInt("charmCost_" + idCharm) == 0) continue;
-
+            if (PlayerData.instance.royalCharmState == 4 && idCharm==36) continue;
                 PlayerData.instance.SetBoolInternal("equippedCharm_" + idCharm, false);
                 PlayerData.instance.UnequipCharm(idCharm);
             }
@@ -174,23 +176,29 @@ namespace GearSwitcher
             PlayerData.instance.overcharmed = false;
 
             PlayerData.instance.CalculateNotchesUsed();
+            HeroController.instance.CharmUpdate();
 
-            PlayMakerFSM.BroadcastEvent("CHARM EQUIP CHECK");
-            PlayMakerFSM.BroadcastEvent("CHARM INDICATOR CHECK");
         }
-        private static void EquipCharms(List<int> Charms)
+        internal static void EquipCharms(List<int> Charms)
         {
             var usedCharmSlots = 0;
-            foreach (int idCharm in Charms)
+            for (int i = 0; i < Charms.Count; i++)
             {
-                if (idCharm == 36 && PlayerData.instance.GetInt("charmCost_" + idCharm) == 0) continue;
+                int idCharm = Charms[i];
+                if (!PlayerData.instance.GetBoolInternal("equippedCharm_" + idCharm))
+                {
+                    PlayerData.instance.SetBoolInternal("equippedCharm_" + idCharm, true);
+                    PlayerData.instance.EquipCharm(idCharm);
 
-                if (PlayerData.instance.charmSlots <= usedCharmSlots) break;
+                    usedCharmSlots += PlayerData.instance.GetInt("charmCost_" + idCharm);
+                }
 
-                PlayerData.instance.SetBoolInternal("equippedCharm_" + idCharm, true);
-                PlayerData.instance.EquipCharm(idCharm);
-                usedCharmSlots += PlayerData.instance.GetInt("charmCost_" + idCharm);
 
+                if (PlayerData.instance.charmSlots <= usedCharmSlots)
+                {
+                    if (i < Charms.Count - 1) RemoveCharms();
+                    break;
+                }
             }
 
 
@@ -200,33 +208,58 @@ namespace GearSwitcher
                 PlayerData.instance.overcharmed = true;
             }
             PlayerData.instance.CalculateNotchesUsed();
+            HeroController.instance.CharmUpdate();
 
-            PlayMakerFSM.BroadcastEvent("CHARM EQUIP CHECK");
-            PlayMakerFSM.BroadcastEvent("CHARM INDICATOR CHECK");
         }
-        public static SavePresetEquipments GetPlayerData()
+        internal static void MakeFreeCharms(bool isFree)
         {
-            SavePresetEquipments value = new();
 
-            value.MaxHealth = PlayerData.instance.maxHealth;
-            value.NailDamage = PlayerData.instance.nailDamage;
-            value.CharmSlots = PlayerData.instance.charmSlots;
-            foreach (var MA in value.HasMoveAbilities)
-            {
-                value.HasMoveAbilities[MA.Key] = PlayerData.instance.GetBool(MA.Key);
-            }
-            foreach (var spells in value.SpelsLvl)
-            {
-                value.SpelsLvl[spells.Key] = PlayerData.instance.GetInt(spells.Key);
-            }
-            foreach (var NA in value.HasNailArts)
-            {
-                value.HasNailArts[NA.Key] = PlayerData.instance.GetBool(NA.Key);
-            }
+            PlayerData.instance.SetInt("charmCost_" + 1, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 2, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 3, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 4, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 5, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 6, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 7, 3 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 8, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 9, 3 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 10, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 11, 3 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 12, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 13, 3 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 14, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 15, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 16, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 17, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 18, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 19, 3 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 20, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 21, 4 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 22, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 23, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 24, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 25, 3 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 26, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 27, 4 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 28, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 29, 4 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 30, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 31, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 32, 3 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 33, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 34, 4 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 35, 3 * (isFree ? 0 : 1));
 
-            value.LvlDreamNail = (PlayerData.instance.hasDreamNail ? 1 : 0) + (PlayerData.instance.hasDreamGate ? 1 : 0) + (PlayerData.instance.dreamNailUpgraded ? 1 : 0);
+            if (PlayerData.instance.royalCharmState == 4)
+                PlayerData.instance.SetInt("charmCost_" + 36, 0 * (isFree ? 0 : 1));
+            else
+                PlayerData.instance.SetInt("charmCost_" + 36, 5 * (isFree ? 0 : 1));
 
-            return value;
+            PlayerData.instance.SetInt("charmCost_" + 37, 1 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 38, 3 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 39, 2 * (isFree ? 0 : 1));
+            PlayerData.instance.SetInt("charmCost_" + 40, 2 * (isFree ? 0 : 1));
+
         }
     }
 }

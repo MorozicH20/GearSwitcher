@@ -24,6 +24,18 @@ namespace GearSwitcher.ModMenu
 
                 new TextPanel(""),
 
+               new HorizontalOption(
+                    "Free Charms", "This setting will make all the charms free.",
+                    ["False","True"],
+                    (setting) => {
+                        GearSwitcher.settings.isFreeCharms= setting == 1;
+                        GearSwitcher.UpdateCharmsCost();
+                    },
+                    () =>  GearSwitcher.settings.isFreeCharms?1:0,
+                    Id:"isFreeCharms"),
+
+                new TextPanel(""),
+
                 new MenuButton("Set Defult Presets","",(_)=>GearSwitcher.SetDefultPresets())
             });
         }

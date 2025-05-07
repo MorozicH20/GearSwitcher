@@ -2,6 +2,7 @@
 using GearSwitcher.ModMenu;
 using GearSwitcher.Settings;
 using System;
+using System.Linq;
 
 
 namespace GearSwitcher
@@ -18,21 +19,21 @@ namespace GearSwitcher
         public GearSwitcher() : base(ModInfo.Name) { }
         public void OnLoadGlobal(GlobalSettings s)
         {
-                if (s == null)
-                {
-                    SetDefultPresets();
-                    return;
-                }
-                settings = s;
+            if (s == null)
+            {
+                SetDefultPresets();
+                return;
+            }
+            settings = s;
 
 
-                if (settings.presetEquipments.Count < 1)
-                    ResetPresets();
+            if (settings.presetEquipments.Count < 1)
+                ResetPresets();
 
-                if (settings.Keybinds.Actions.Count < 1)
-                    ResetBinds();
+            if (settings.Keybinds.Actions.Count < 1)
+                ResetBinds();
 
-            
+
         }
         GlobalSettings IGlobalSettings<GlobalSettings>.OnSaveGlobal()
         {
@@ -41,6 +42,7 @@ namespace GearSwitcher
 
         public void OnLoadLocal(LocalSettings s)
         {
+
             localSettings = s;
         }
 
@@ -55,9 +57,29 @@ namespace GearSwitcher
             if (settings.presetEquipments.Count < 1)
                 ResetPresets();
 
+            On.HeroController.Start += HeroController_Start;
             InputListener.Start();
         }
 
+        private void HeroController_Start(On.HeroController.orig_Start orig, HeroController self)
+        {
+            orig(self);
+            UpdateCharmsCost();
+        }
+
+        public static void UpdateCharmsCost()
+        {
+            if (PlayerData.instance != null && HeroController.instance != null)
+            {
+                ManagerResurse.MakeFreeCharms(settings.isFreeCharms);
+                if (localSettings.LastPreset != null)
+                    ManagerResurse.SetPreset(settings.presetEquipments[localSettings.LastPreset]);
+                else
+                    ManagerResurse.SetPreset(settings.presetEquipments["FullSave"]);
+
+            }
+
+        }
         public static void ResetPresets()
         {
             var FullSave = DefaultPresets.FullSave();

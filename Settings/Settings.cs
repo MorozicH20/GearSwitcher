@@ -12,6 +12,7 @@ namespace GearSwitcher.Settings
         public KeyBindsAction Keybinds = new();
 
         public bool isSaveСollectionsCharms = false;
+        public bool isFreeCharms = false;
 
         public Dictionary<string, SavePresetEquipments> presetEquipments = new Dictionary<string, SavePresetEquipments>();
 

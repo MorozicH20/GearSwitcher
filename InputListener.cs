@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Linq;
+using System;
 
 namespace GearSwitcher
 {
@@ -20,13 +21,12 @@ namespace GearSwitcher
             {
                 for (int i = 0; i < GearSwitcher.settings.Keybinds.Actions.Count; i++)
                 {
-
                     if (GameManager.instance != null && !(GameManager.instance.isPaused))
                     {
 
                         if (GearSwitcher.settings.Keybinds.Actions[i].WasPressed)
                         {
-                            if (GearSwitcher.settings.isSaveСollectionsCharms || GearSwitcher.localSettings.LastPreset != null)
+                            if (GearSwitcher.settings.isSaveСollectionsCharms && GearSwitcher.localSettings.LastPreset != null)
                                 GearSwitcher.settings.presetEquipments[GearSwitcher.localSettings.LastPreset].EquippedCharms = PlayerData.instance.equippedCharms.ToList();
                             ManagerResurse.SetPreset(GearSwitcher.settings.presetEquipments[GearSwitcher.settings.presetEquipments.Keys.ToArray()[i]]);
                         }

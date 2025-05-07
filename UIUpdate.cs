@@ -13,6 +13,10 @@ namespace GearSwitcher
                 GameCameras.instance.hudCanvas.gameObject.SetActive(false);
                 GameCameras.instance.hudCanvas.gameObject.SetActive(true);
             }
+
+            PlayMakerFSM.BroadcastEvent("CHARM EQUIP CHECK");
+            PlayMakerFSM.BroadcastEvent("CHARM INDICATOR CHECK");
+            PlayMakerFSM.BroadcastEvent("UPDATE BLUE HEALTH");
         }
     }
 }
