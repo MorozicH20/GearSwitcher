@@ -36,7 +36,7 @@ namespace GearSwitcher.ModMenu
 
                 new TextPanel(""),
 
-                new MenuButton("Set Defult Presets","",(_)=>GearSwitcher.SetDefultPresets())
+                new MenuButton("Set Defult Presets","",(_)=>GearSwitcher.SetDefultSettings())
             });
         }
         internal static MenuScreen GetMenu(MenuScreen lastMenu, ModToggleDelegates? toggleDelegates)

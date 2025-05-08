@@ -8,6 +8,7 @@ namespace GearSwitcher.Settings
 
     public class GlobalSettings
     {
+        public string version = null;
         [JsonConverter(typeof(PlayerActionSetConverter))]
         public KeyBindsAction Keybinds = new();
 

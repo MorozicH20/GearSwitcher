@@ -19,9 +19,9 @@ namespace GearSwitcher
         public GearSwitcher() : base(ModInfo.Name) { }
         public void OnLoadGlobal(GlobalSettings s)
         {
-            if (s == null)
+            if (s == null || s.version != ModInfo.Version)
             {
-                SetDefultPresets();
+                SetDefultSettings();
                 return;
             }
             settings = s;
@@ -131,11 +131,11 @@ namespace GearSwitcher
             settings.Keybinds = new();
 
         }
-        public static void SetDefultPresets()
+        public static void SetDefultSettings()
         {
             ResetPresets();
             ResetBinds();
-
+            settings.version = ModInfo.Version;
         }
 
 
