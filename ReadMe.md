@@ -59,7 +59,7 @@ For example
     "FullSave": {
       "Name": "FullSave",
       "MaxHealth": 9,
-      "MaxMP": 198,
+      "SoulVessels": 3,
       "NailDamage": 21,
       "CharmSlots": 11,
       "EquippedCharms": [
@@ -100,7 +100,7 @@ For example
     "04": {
       "Name": "04",
       "MaxHealth": 9,
-      "MaxMP": 198,
+      "SoulVessels": 3,
       "NailDamage": 5,
       "CharmSlots": 11,
       "EquippedCharms": null,
@@ -174,7 +174,7 @@ Example key values:
 
 *   `Name`: (string) The name of the preset.
 *   `MaxHealth`: (integer) Maximum health.
-*   `MaxMP`: (integer) Maximum MP (Soul).
+*   `SoulVessels`: (integer) count Soul Vessels.
 *   `NailDamage`: (integer) Nail damage level.
 *   `CharmSlots`: (integer) Number of available charm slots.
 *   `EquippedCharms` (List<int>) List of the latest equipped charms

@@ -15,7 +15,7 @@ namespace GearSwitcher.ModMenu
             for (int i = 0; i < GearSwitcher.settings.Keybinds.Actions.Count; i++)
             {
                 InControl.PlayerAction bind = GearSwitcher.settings.Keybinds.Actions[i];
-                elements.Add(new KeyBind(GearSwitcher.settings.presetEquipments.Values.ToArray()[i].Name, bind));
+                elements.Add(new KeyBind(GearSwitcher.settings.presetEquipments.Values.ToArray()[i].Name, bind, Id:$"Key{i}"));
             }
 
             elements.Add(new MenuButton(

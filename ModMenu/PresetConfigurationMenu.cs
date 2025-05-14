@@ -203,7 +203,7 @@ namespace GearSwitcher.ModMenu
 
                new HorizontalOption(
                     "Dream Nail Level", "",
-                    ["0","1","2"],
+                    ["0","1","2","3"],
                     (setting) => { preset.LvlDreamNail = setting; },
                     () => preset.LvlDreamNail,
                     Id:"LvlDreamNail"),
