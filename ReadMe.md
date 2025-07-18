@@ -2,48 +2,58 @@
 
 ## Introduction
 
-This mod allows players to quickly switch between pre-defined gear presets in Hollow Knight. This is useful for various challenges, speedruns, or simply for experimenting with different builds on the fly.
+**GearSwitcher** allows players to quickly switch between pre-defined gear presets in *Hollow Knight*. This is useful for challenges, speedruns, or experimenting with different builds on the fly.
 
 ## Dependencies
 
-*   [ToggleableBindings](https://github.com/Unordinal/HollowKnight.ToggleableBindings) (v0.13)
+- [ToggleableBindings](https://github.com/Unordinal/HollowKnight.ToggleableBindings) (v0.13)
 
 ## Features
 
-**Preset Management**: Save and load custom gear loadouts and charms builds.\
+- **Preset Management**: Save and load custom gear and charm builds.
+- **In-Game Switching**: Instantly swap between presets using customizable hotkeys.
+- **Free Charms**: Option to make all charms cost 0 notches.
 
-**In-Game Switching**: Quickly swap between presets using customizable hotkeys.\
+---
 
-**Free Charms**: the opportunity to make charms free
+## Installation
 
-### Installation
-Make sure you have the Hollow Knight modding API installed (e.g., Modding API).\
+Make sure you have the Hollow Knight modding API installed (e.g., Modding API).
 
-Place the GearSwitcher.dll file into your Hollow Knight’s Mods folder.\
+1. Place the `GearSwitcher.dll` file into your Hollow Knight `Mods` folder.
+2. Run the game.
 
-Run the game.
+---
 
 ## Configuration
 
-The mod uses JSON files to store and manage your presets. You can customize the following settings:\
+The mod uses a JSON file to store and manage presets. You can customize the following settings:
 
-**Preset File**: The mod will read preset data from a JSON file located in the Hollow Knight game directory (Steam: "C:\Users\User\AppData\LocalLow\Team Cherry\Hollow Knight\GearSwitcher.GlobalSettings.json").\
+- **Preset File**: Presets are stored in a JSON file located at:  
+  `C:\Users\<User>\AppData\LocalLow\Team Cherry\Hollow Knight\GearSwitcher.GlobalSettings.json`
 
-**Hotkey Customization**: Configure hotkeys to switch between your presets.
+- **Hotkey Customization**: Configure hotkeys to switch between presets.
+
+---
 
 ### Preset JSON Structure
-The main configuration file is a JSON object. The configuration file is a JSON object. consisting of two dictionaries and two boolean variable: binds, presets, isSaveCollectionsCharms and isFreeCharms
 
-For example
+The main configuration file is a JSON object consisting of two dictionaries and two boolean variables:
+
+- `Keybinds`
+- `presetEquipments`
+- `isSaveEquippedCharms`
+- `isFreeCharms`
+
+**Example JSON:**
 
 ```json
-
 {
-   "Keybinds": {
-    "FullSave": "Key0",
+  "Keybinds": {
+    "FullGear": "Key0",
     "O4": "Key1",
     "Ow": "Key2",
-    "ItemLess": "Key3",
+    "Itemless": "Key3",
     "NMA": "Key4",
     "NNA": "Key5",
     "NailOnly": "Key6",
@@ -56,17 +66,13 @@ For example
   "isSaveEquippedCharms": true,
   "isFreeCharms": false,
   "presetEquipments": {
-    "FullSave": {
-      "Name": "FullSave",
+    "FullGear": {
+      "Name": "FullGear",
       "MaxHealth": 9,
       "SoulVessels": 3,
       "NailDamage": 21,
       "CharmSlots": 11,
-      "EquippedCharms": [
-        2,
-        1,
-        31
-      ],
+      "EquippedCharms": [2, 1, 31],
       "HasAllMoveAbilities": true,
       "HasMoveAbilities": {
         "AcidArmour": false,
@@ -135,84 +141,74 @@ For example
       }
     },
   }
+}
 ```
+## Field Explanations
 
-## Fields
+### Keybinds
 
-### Explanation : binds
+- **Preset Name**: The key in the `Keybinds` object must exactly match the `"Name"` field of a defined preset.
+- **Keyboard Key**: The value is a key string from the InControl KeyCode enum.
 
-**Preset Name**: The key in the `"binds"` object is the exact name of a gear preset defined in the main JSON array. For example, if you have a preset with `"Name": "O4"`, then you can bind a key to it.\
+Examples of valid key values:
+- Key0, Key1, ..., Key9 (number keys)
+- A, B, C, ..., Z (letter keys)
+- F1, F2, ..., F12 (function keys)
+- Pad0, Pad1, ..., Pad9 (numpad keys)
+- LeftShift, RightShift, LeftControl, RightControl, LeftAlt, RightAlt
+- Space
+- Return (Enter)
+- Escape
+- Tab
 
-**Keyboard Key**: The value associated with each preset name is the keyboard key that activates that preset. The key names are based on the KeyCode enum in In Control. \
+Notes:
+- Key names are case-sensitive and must match exactly.
+- Invalid key names may cause errors or prevent activation.
+- Avoid assigning the same key to multiple presets or keys already used by the game or other mods to prevent conflicts.
+- Presets with no key defined cannot be activated via hotkey.
+- If keybinds do not work, check the mod log file for errors.
 
-Example key values:
+### presetEquipments
 
-*Key 0, Key 1, Key 2, …, Key 9 (the number keys on the main keyboard)
-* A, B, C, …, Z (letter keys)
-* F1, F2, …, F12 (function keys)
-* Pad0, Pad1, … Pad9 (keypad number keys)
-* LeftShift, RightShift, LeftControl, RightControl, LeftAlt, RightAlt
-* Space
-* Return (Enter)
-* Escape
-* Tab
+Each gear preset contains the following fields:
 
-**Case Sensitivity**: Preset names in the "binds" object are case-sensitive and must exactly match the "Name" field in your gear preset definitions.\
+- `Name` (string): The name of the preset.
+- `MaxHealth` (int): Maximum health.
+- `SoulVessels` (int): Number of soul vessels.
+- `NailDamage` (int): Nail damage value.
+- `CharmSlots` (int): Number of available charm slots.
+- `EquippedCharms` (list of int): List of charm IDs to equip.
+- `HasAllMoveAbilities` (bool): If true, overrides the `HasMoveAbilities` section.
+- `HasMoveAbilities` (object of bools):
+  - `AcidArmour`
+  - `Dash`
+  - `Walljump`
+  - `SuperDash`
+  - `ShadowDash`
+  - `DoubleJump`
+- `AllSpelsLvl` (int): If set, overrides individual spell levels.
+- `SpelsLvl` (object of ints):
+  - `fireballLevel`
+  - `quakeLevel`
+  - `screamLevel`
+- `HasAllNailArts` (bool): If true, overrides the `HasNailArts` section.
+- `HasNailArts` (object of bools):
+  - `hasCyclone`
+  - `hasDashSlash`
+  - `hasUpwardSlash`
+- `LvlDreamNail` (int): Dream Nail upgrade level.
+- `HasAllBindings` (bool): If true, overrides the `Bindings` section.
+- `Bindings` (object of bools):
+  - `CharmsBinding`
+  - `NailBinding`
+  - `ShellBinding`
+  - `SoulBinding`
 
-**Valid Key Codes**: Only use valid KeyCode values from InControl. Using an invalid key code will likely result in an error.\
+## Preset and Keybind Customization via Menu
 
-**Key Conflicts**: Be aware that key bindings may conflict with other mods or with the game’s default controls. If you experience conflicts, you’ll need to choose different key bindings.\
+GearSwitcher includes an in-game interface to manage presets and keybindings.
 
-**Missing Bindings**: If a preset does not have a binding defined in the "binds" object, it cannot be activated via a hotkey.\
-
-**Overriding Bindings**: If the same key is assigned to multiple presets, the last definition will take precedence. Avoid assigning the same key to multiple presets.\
-
-**Error Handling**: Check the mod's log file if key binding is not working. You can also reset bindings to standard ones in the mod settings menu.\
-
-
-### Explanation : presetEquipments
-
-*   `Name`: (string) The name of the preset.
-*   `MaxHealth`: (integer) Maximum health.
-*   `SoulVessels`: (integer) count Soul Vessels.
-*   `NailDamage`: (integer) Nail damage level.
-*   `CharmSlots`: (integer) Number of available charm slots.
-*   `EquippedCharms` (List<int>) List of the latest equipped charms
-*   `HasAllMoveAbilities`: (boolean) Whether all movement abilities are unlocked. If true, the `HasMoveAbilities` field is ignored.
-*   `HasMoveAbilities`: (object) An object containing booleans for each movement ability:
-    *   `AcidArmour`: (boolean) Has acid armor.
-    *   `Dash`: (boolean) Has dash.
-    *   `Walljump`: (boolean) Has wall jump.
-    *   `SuperDash`: (boolean) Has super dash.
-    *   `ShadowDash`: (boolean) Has shadow dash.
-    *   `DoubleJump`: (boolean) Has double jump.
-*   `AllSpelsLvl`: (integer) The level of all spells. If 1, the `SpelsLvl` is ignored.
-*   `SpelsLvl`: (object) An object containing integers for each spell level:
-    *   `fireballLevel`: (integer) Fireball level.
-    *   `quakeLevel`: (integer) Quake level.
-    *   `screamLevel`: (integer) Scream level.
-*   `HasAllNailArts`: (boolean) Whether all nail arts are unlocked. If true, the `HasNailArts` field is ignored.
-*   `HasNailArts`: (object) An object containing booleans for each nail art:
-    *   `hasCyclone`: (boolean) Has cyclone slash.
-    *   `hasDashSlash`: (boolean) Has dash slash.
-    *   `hasUpwardSlash`: (boolean) Has upward slash.
-*   `LvlDreamNail`: (integer) Dream nail level.
-*   `HasAllBindings`: (boolean) Whether all bindings are active. If true, the `Bindings` field is ignored.
-*   `Bindings`: (object) An object containing booleans for each binding:
-    *   `CharmsBinding`: (boolean) Charm binding.
-    *   `NailBinding`: (boolean) Nail binding.
-    *   `ShellBinding`: (boolean) Shell binding.
-    *   `SoulBinding`: (boolean) Soul binding.
-
-      * 
-## Present and Bind Customization via Menu
-
-Gear Switcher offers a interface to manage your gear presets and assign hotkeys:
-
-* **Reset Configuration Menu**: The mod provides an in-game menu where you can add, delete, and edit your gear presets. This allows you to easily adapt your loadouts to different situations and playstyles. 
-
-* **Bind Assignment Menu**: For each preset, you can configure a hotkey that will instantly activate that preset. Key assignments are done in a dedicated binds menu.
-
-* **Save Charms Builds**: Allow you to save charms build separately for each preset
-
-* **Free Charms**: If true, it will make all the charms free if false, it will return the standard cost of the amulets.
+- **Configure Custom Presets**: Add, delete, or edit gear presets from within the game.
+- **Configure Keybinds**: Assign hotkeys to each preset through a dedicated menu.
+- **Save Charm Builds**: Allows you to save a charm build separately for each preset.
+- **Free Charms**: If enabled, all charms cost 0 notches. If disabled, charms use their normal cost.

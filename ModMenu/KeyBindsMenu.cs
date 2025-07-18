@@ -19,7 +19,7 @@ namespace GearSwitcher.ModMenu
             }
 
             elements.Add(new MenuButton(
-                "Reset Binds", "",
+                "Reset Keybinds", "",
                 submitAction: (Mbutton) =>
                 {
                     GearSwitcher.ResetBinds();
