@@ -11,21 +11,21 @@ namespace GearSwitcher.ModMenu
         internal static Menu PrepareMenu()
         {
             return new Menu("Gear Switcher", new Element[]{
-                Blueprints.NavigateToMenu( "Key Binds","keyboard shortcut change menu",()=> KeyBindsMenu.GetMenu(MenuRef.menuScreen)),
-                Blueprints.NavigateToMenu( "Presets configuration","Presets configuration change menu",()=> ListPresetMenu.GetMenu(MenuRef.menuScreen)),
+                Blueprints.NavigateToMenu( "Configure Keybinds","Set custom keyboard shortcuts for each preset",()=> KeyBindsMenu.GetMenu(MenuRef.menuScreen)),
+                Blueprints.NavigateToMenu( "Configure Custom Presets","Manage and customize your presets",()=> ListPresetMenu.GetMenu(MenuRef.menuScreen)),
 
 
                new HorizontalOption(
-                    "Saving collections of charms", "This setting allows you to remember and put on the last put-on charm assembly separately for each preset.",
+                    "Save Charms", "If this setting is enabled, a preset will also save your charm build",
                     ["False","True"],
                     (setting) => { GearSwitcher.settings.isSaveСollectionsCharms= setting == 1; },
                     () =>  GearSwitcher.settings.isSaveСollectionsCharms?1:0,
                     Id:"isSaveEquippedCharms"),
 
-                new TextPanel(""),
+                //new TextPanel(""),
 
                new HorizontalOption(
-                    "Free Charms", "This setting will make all the charms free.",
+                    "Free Charms", "This setting makes all charms cost 0 notches",
                     ["False","True"],
                     (setting) => {
                         GearSwitcher.settings.isFreeCharms= setting == 1;
@@ -34,9 +34,9 @@ namespace GearSwitcher.ModMenu
                     () =>  GearSwitcher.settings.isFreeCharms?1:0,
                     Id:"isFreeCharms"),
 
-                new TextPanel(""),
+                //new TextPanel(""),
 
-                new MenuButton("Set Defult Presets","",(_)=>GearSwitcher.SetDefultSettings())
+                new MenuButton("Reset to Defaults","",(_)=>GearSwitcher.SetDefultSettings())
             });
         }
         internal static MenuScreen GetMenu(MenuScreen lastMenu, ModToggleDelegates? toggleDelegates)

@@ -3,11 +3,11 @@ namespace GearSwitcher
 {
     internal static class DefaultPresets
     {
-        public static SavePresetEquipments FullSave()
+        public static SavePresetEquipments FullGear()
         {
             SavePresetEquipments value = new();
 
-            value.Name = "FullSave";
+            value.Name = "FullGear";
             value.MaxHealth = 9;
             value.SoulVessels = 3;
             value.NailDamage = 21;
@@ -51,11 +51,11 @@ namespace GearSwitcher
             return value;
         }
 
-        public static SavePresetEquipments ItemLess()
+        public static SavePresetEquipments Itemless()
         {
             SavePresetEquipments value = new();
 
-            value.Name = "ItemLess";
+            value.Name = "Itemless";
 
             return value;
         }
@@ -109,12 +109,12 @@ namespace GearSwitcher
 
             return value;
         }
-        public static SavePresetEquipments Ab()
+        public static SavePresetEquipments AB()
         {
 
             SavePresetEquipments value = new();
 
-            value.Name = "Ab";
+            value.Name = "AB";
             value.MaxHealth = 9;
             value.SoulVessels = 3;
             value.NailDamage = 21;

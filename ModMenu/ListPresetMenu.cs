@@ -19,7 +19,7 @@ namespace GearSwitcher.ModMenu
                     elements.Add(Blueprints.NavigateToMenu($"{preset.Value.Name}", "", () => PresetConfigurationMenu.GetMenu(MenuRef.menuScreen, preset.Value)));
 
             }
-            var menu = new Menu("List Custom presets", elements.ToArray());
+            var menu = new Menu("Configure Custom Presets", elements.ToArray());
             return menu;
         }
 

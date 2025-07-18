@@ -23,7 +23,7 @@ namespace GearSwitcher.ModMenu
                //     Id:"Max health"),
 
                new CustomSlider(
-                    name: "Max health",
+                    name: "Max Health",
                     storeValue: val =>
                     {
                        preset.MaxHealth = (int) val;
@@ -61,14 +61,14 @@ namespace GearSwitcher.ModMenu
                     ),
 
                //new HorizontalOption(
-               //     "Charm Slots", "",
+               //     "Charm Notches", "",
                //     ["3","4","5","6","7","8","9","10","11"],
                //     (setting) => { preset.CharmSlots = setting+3; },
                //     () => preset.CharmSlots-3,
                //     Id:"CharmSlots"),
 
                 new CustomSlider(
-                    name: "Charm Slots",
+                    name: "Charm Notches",
                     storeValue: val =>
                     {
                        preset.CharmSlots = (int) val;
