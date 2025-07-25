@@ -36,7 +36,7 @@ namespace GearSwitcher.ModMenu
 
                 //new TextPanel(""),
 
-                new MenuButton("Reset to Defaults","",(_)=>GearSwitcher.SetDefultSettings())
+                new MenuButton("Reset to Defaults","",(_)=>{GearSwitcher.settings = new(); MenuRef.Update(); })
             });
         }
         internal static MenuScreen GetMenu(MenuScreen lastMenu, ModToggleDelegates? toggleDelegates)

@@ -22,7 +22,8 @@ namespace GearSwitcher.ModMenu
                 "Reset Keybinds", "",
                 submitAction: (Mbutton) =>
                 {
-                    GearSwitcher.ResetBinds();
+                    GearSwitcher.settings.Keybinds = new();
+                    MenuRef.Update();
                 },
                 Id: "resetBinds"));
 
